@@ -1,0 +1,137 @@
+Users
+    UserID int not null IDENTITY PRIMARY key,
+    FirstName varchar (20) not null 
+        CONSTRAINT ck_user_first_name_cannot_be_blank check (FirstName <> ''),
+    LastName VARCHAR (20) not NULL
+        CONSTRAINT ck_user_last_name_cannot_be_blank CHECK (LastName <> ''),
+    UserName VARCHAR (21) not NULL
+        CONSTRAINT ck_user_name_cannot_be_blank CHECK (UserName <> '')
+        constraint user_name_is UNIQUE
+Cuisine
+    CuisineID int not null IDENTITY PRIMARY KEY,
+    CuisineName VARCHAR (20) not null
+        CONSTRAINT ck_cuisine_name_cannot_be_blank CHECK (CuisineName <> '')
+        constraint cuisine_name_is UNIQUE
+
+Recipe
+    RecipeID int not null IDENTITY PRIMARY key,
+    CuisineID int not null
+        CONSTRAINT f_cuisine_recipes FOREIGN key REFERENCES Cuisine(CuisineID),
+       UserID int not null 
+        CONSTRAINT f_User_recipe REFERENCES Users(UserID),
+    RecipeName VARCHAR(50) 
+        CONSTRAINT ck_recipe_name_cannot_be_blank CHECK (RecipeName <> '') 
+        CONSTRAINT u_recipe_name UNIQUE,
+    Calories int not null
+        constraint ck calories_must_be_greater_than_zero check (calories > 0), 
+    DraftDate datetime
+        constraint ck_draft_date_must_be_between_10/27/2025_and_the_current_date check (DraftDate between 10-27-2025 and getdate()),
+--AS You by mistake did greater than rather then less than
+    PublishedDate datetime null
+        constraint ck_published_date_must_be_before_current_date check (PublishedDate < getdate),
+    ArchivedDate datetime null
+        constraint ck_archived_date_must_be_before_current_date check (ArchivedDate < getdate),
+    RecipeStatus  
+        case WHEN ArchivedDate IS NOT NULL THEN 'Archived'
+             WHEN PublishedDate IS NOT NULL THEN 'Published'
+             WHEN DraftDate IS NOT NULL THEN 'Draft'
+END
+    RecipePicture AS ('Recipe_' + REPLACE(RecipeName, ' ', '_') + '.jpg'),
+        CONSTRAINT ck_draft_date_must_be_before_published_date CHECK (DraftDate < PublishedDate),
+        CONSTRAINT ck_published_date_must_be_before_archived_date CHECK (PublishedDate < ArchivedDate)
+        constraint ck_draft_date_must_be_before_archived_date check (DraftDate < ArchivedDate),
+
+Measurement
+    MeasurementID int not null IDENTITY PRIMARY KEY,
+    MeasurementType VARCHAR (10) not null  
+        CONSTRAINT ck_measurement_type_cannot_be_blank CHECK (MeasurementType <> '')
+        constraint MeasurementType_is UNIQUE
+Ingredient
+    IngredientID int not null IDENTITY PRIMARY key,
+    IngredientName VARCHAR (30)not null
+        CONSTRAINT ck_ingredient_name_cannot_be_blank CHECK (IngredientName <> '') 
+        CONSTRAINT u_ingredient_name UNIQUE,
+    IngredientPicture as ('Ingredient_' + IngredientName +'.jpg')
+Meal
+    MealID int not null IDENTITY PRIMARY key,
+    MealName VARCHAR (50)not null 
+        CONSTRAINT ck_meal_name_cannot_be_blank CHECK (MealName <>'')
+        CONSTRAINT u_meal_name UNIQUE,
+    UserID int not null 
+        CONSTRAINT f_Users_ID REFERENCES Users(UserID),
+    MealStatus VARCHAR (8) not null
+        constraint ck_meal_status_cannot_be_blank CHECK (MealStatus <>''),
+        CONSTRAINT ck_meal_status_must_be_active_or_inactive CHECK (MealStatus in ('active', 'inactive')),
+    DateMealCreated DATE not NULL,
+    MealPicture as ('Meal_'+ MealName+'.jpg')
+Course
+    CourseID int not null IDENTITY PRIMARY KEY
+    CourseName VARCHAR (20) not null 
+        CONSTRAINT u_course_name_is UNIQUE
+        CONSTRAINT ck_course_name_cannot_be_blank CHECK(CourseName <> ''),
+--AS Sorry not sure why I wrote greater than 1, meant 0
+CourseSequence int not NULL
+    constraint ck_course_sequence_must_be_greater_than_0 (CourseSequence > 0)
+CookBook(
+    CookBookID int not null IDENTITY PRIMARY key,
+    CookBookName VARCHAR (50) not null
+        CONSTRAINT ck_cook_book_name_cannot_be_blank CHECK (CookBookName <> '')
+        CONSTRAINT u_cook_book_name UNIQUE
+    Price DECIMAL(5,2) not NULL
+        constraint ck_price_must_be_greater_than_0 check (price > 0),
+    UserID int not null 
+        CONSTRAINT f_User_UserID REFERENCES Users(UserID),
+    CookBookStatus bit DEFAULT 0,
+    DateCookBookCreated DATE not NULL,
+        constraint ck_cook_book_must_be_created_between_10/27/2025_and_the_current_date check (DateCookBookCreated between 10-27-2025 and getdate())
+CookBookPicture as ('CookBook_' + REPLACE(CookBookName, ' ', '_') + '.jpg')
+
+RecipeIngredient 
+    RecipeIngredientID int not null IDENTITY PRIMARY key,
+    RecipeID int not null 
+        CONSTRAINT f_recipe_ID FOREIGN key REFERENCES Recipe(RecipeID),
+    IngredientID int not null 
+        CONSTRAINT f_Ingredient_IngredientID FOREIGN KEY REFERENCES Ingredient (IngredientID),
+    MeasurementID int not null 
+        constraint f_Measurement_ID FOREIGN key REFERENCES Measurement(MeasurementID),
+    Amount DECIMAL (4,2) not NULL,
+--AS Same here, greater than zero
+    IngredientSequence int not null 
+        constraint ck_ingredient_sequence_is_greater_than_0 CHECK (IngredientSequence > 0),
+    CONSTRAINT u_recipe_and_ingredient_is UNIQUE (RecipeID, IngredientID)
+MealCourse 
+    MealCourseID int not null IDENTITY PRIMARY key,
+    MealID int not null 
+        CONSTRAINT f_mealID FOREIGN key REFERENCES meal (MealID),
+    CourseID int not null
+        constraint f_courseID FOREIGN key REFERENCES course(CourseID),
+    constraint u_meal_ID_and_course_ID is unique (MealID, CourseID)
+RecipeMealCourse(
+    RecipeMealCourseID int not null IDENTITY PRIMARY key,
+    MealCourseID int not null CONSTRAINT f_meal_course_ID FOREIGN KEY REFERENCES mealcourse(MealCourseID),
+    RecipeID int not null CONSTRAINT f_recipe_meal_course_recipe FOREIGN key REFERENCES recipe(RecipeId),
+    DishType bit DEFAULT 0,
+    constraint u_meal_course_ID_and_Recipe_ID_is unique (MealCourseID, RecipeID)
+CookBookRecipe(
+    CookBookRecipeID int not null IDENTITY PRIMARY key,
+    CookBookID int not null 
+        constraint f_cookbook_ID FOREIGN key REFERENCES cookbook(CookBookID),
+    RecipeID int not null 
+        constraint f_recipe FOREIGN key REFERENCES recipe(RecipeID),
+--AS Same here, greater than 0
+    RecipeSequence int not null
+        CONSTRAINT ck_recipe_sequence_is_greater_than_0 (RecipeSequence > 0),
+    CONSTRAINT u_cook_book_ID_and_recipe_name_are_unique UNIQUE (CookBookID, RecipeID)
+Instruction 
+    InstructionID int not null IDENTITY PRIMARY key,
+    RecipeID int not null CONSTRAINT f_Instruction_RecipeID FOREIGN key REFERENCES recipe(RecipeID),
+    Instructions VARCHAR (500) not NULL
+        constraint ck_instructions_cannot_be_blank check (instructions <> ''),
+--AS Same here, greater than 0
+    InstructionSequence int not null
+        constraint ck_instruction_sequence_must_be_greater_than_0 check(RecipeSequence > 0)
+
+
+
+
+

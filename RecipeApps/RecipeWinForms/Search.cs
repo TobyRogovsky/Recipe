@@ -1,11 +1,5 @@
 ﻿using CPUFramework;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace RecipeWinForms
 {
@@ -16,6 +10,7 @@ namespace RecipeWinForms
             InitializeComponent();            
             btnSearch.Click += BtnSearch_Click;
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
+            Format();
         }
 
         private void ShowRecipe(int rowindex)
@@ -46,8 +41,7 @@ namespace RecipeWinForms
         }
 
         private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
-        {
-            Format();
+        {            
             ShowRecipe(e.RowIndex);
         }
 

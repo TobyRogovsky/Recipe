@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="../../CPUFramework/CPUFramework.csproj" />
+  <Project Path="../../CPUWinFormsFramework/CPUWinFormsFramework.csproj" />
   <Project Path="RecipeWinForms/RecipeWinForms.csproj" />
 </Solution>

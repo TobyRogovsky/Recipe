@@ -6,7 +6,7 @@ namespace RecipeWinForms
     internal static class Program
     {
         public static string connstring = "Server=tcp:dev-tobycpu.database.windows.net,1433;" +
-            "Initial Catalog=HeartyHearth;" +
+            "Initial Catalog=RecipeDB;" +
             "Persist Security Info=False;" +
             "User ID=TobyR;" +
             "Password=Liron@123;" +

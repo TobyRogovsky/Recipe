@@ -39,7 +39,7 @@ namespace RecipeWinForms
 
         private void Save()
         {
-            SQLUtility.DebugPrintDT(dtrecipe);
+            
             DataRow r = dtrecipe.Rows[0];
             int id = 0;
             int.TryParse(r["RecipeID"].ToString(), out id);

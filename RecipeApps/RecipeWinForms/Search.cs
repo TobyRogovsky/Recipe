@@ -33,6 +33,7 @@ namespace RecipeWinForms
             string sql = "select RecipeID, RecipeName from recipe r where r.recipename like '%" + recipename + "%'";
             DataTable dt = SQLUtility.GetDataTable(sql);
             gRecipe.DataSource = dt;
+            gRecipe.Columns["RecipeID"].Visible = false;
         }
       
 

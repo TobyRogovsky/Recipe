@@ -33,8 +33,6 @@
             lblArchivedDate = new Label();
             lblPublishedDate = new Label();
             lblDraftDate = new Label();
-            txtArchivedDate = new TextBox();
-            txtPublishedDate = new TextBox();
             txtRecipeStatus = new TextBox();
             txtCalories = new TextBox();
             lblCalories = new Label();
@@ -46,6 +44,8 @@
             toolStripSeparator1 = new ToolStripSeparator();
             btnDelete = new ToolStripButton();
             dtpDraftDate = new DateTimePicker();
+            txtPublishedDate = new TextBox();
+            txtArchivedDate = new TextBox();
             tblMain.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -55,11 +55,11 @@
             tblMain.ColumnCount = 2;
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 17F));
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 83F));
+            tblMain.Controls.Add(txtArchivedDate, 1, 5);
+            tblMain.Controls.Add(txtPublishedDate, 1, 4);
             tblMain.Controls.Add(lblArchivedDate, 0, 5);
             tblMain.Controls.Add(lblPublishedDate, 0, 4);
             tblMain.Controls.Add(lblDraftDate, 0, 3);
-            tblMain.Controls.Add(txtArchivedDate, 1, 5);
-            tblMain.Controls.Add(txtPublishedDate, 1, 4);
             tblMain.Controls.Add(txtRecipeStatus, 1, 2);
             tblMain.Controls.Add(txtCalories, 1, 1);
             tblMain.Controls.Add(lblCalories, 0, 1);
@@ -115,24 +115,6 @@
             lblDraftDate.TabIndex = 13;
             lblDraftDate.Text = "Draft Date";
             lblDraftDate.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // txtArchivedDate
-            // 
-            txtArchivedDate.Dock = DockStyle.Fill;
-            txtArchivedDate.Location = new Point(139, 328);
-            txtArchivedDate.Multiline = true;
-            txtArchivedDate.Name = "txtArchivedDate";
-            txtArchivedDate.Size = new Size(658, 59);
-            txtArchivedDate.TabIndex = 12;
-            // 
-            // txtPublishedDate
-            // 
-            txtPublishedDate.Dock = DockStyle.Fill;
-            txtPublishedDate.Location = new Point(139, 263);
-            txtPublishedDate.Multiline = true;
-            txtPublishedDate.Name = "txtPublishedDate";
-            txtPublishedDate.Size = new Size(658, 59);
-            txtPublishedDate.TabIndex = 10;
             // 
             // txtRecipeStatus
             // 
@@ -238,6 +220,24 @@
             dtpDraftDate.Size = new Size(262, 29);
             dtpDraftDate.TabIndex = 19;
             // 
+            // txtPublishedDate
+            // 
+            txtPublishedDate.Dock = DockStyle.Fill;
+            txtPublishedDate.Location = new Point(139, 263);
+            txtPublishedDate.Multiline = true;
+            txtPublishedDate.Name = "txtPublishedDate";
+            txtPublishedDate.Size = new Size(658, 59);
+            txtPublishedDate.TabIndex = 20;
+            // 
+            // txtArchivedDate
+            // 
+            txtArchivedDate.Dock = DockStyle.Fill;
+            txtArchivedDate.Location = new Point(139, 328);
+            txtArchivedDate.Multiline = true;
+            txtArchivedDate.Name = "txtArchivedDate";
+            txtArchivedDate.Size = new Size(658, 59);
+            txtArchivedDate.TabIndex = 21;
+            // 
             // frmRecipe
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -262,8 +262,6 @@
         private Label lblRecipeStatus;
         private TextBox txtRecipeName;
         private Label lblDraftDate;
-        private TextBox txtArchivedDate;
-        private TextBox txtPublishedDate;
         private TextBox txtRecipeStatus;
         private Label lblArchivedDate;
         private Label lblPublishedDate;
@@ -272,5 +270,7 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton btnDelete;
         private DateTimePicker dtpDraftDate;
+        private TextBox txtArchivedDate;
+        private TextBox txtPublishedDate;
     }
 }

@@ -9,15 +9,45 @@ namespace RecipeSystem
         {
             return SQLUtility.GetDataTable("select RecipeID, RecipeName from Recipe");
         }
+        public static DataTable GetCuisineList()
+        {
+            return SQLUtility.GetDataTable("select CuisineID, CuisineName from Cuisine");
+        }
+
+        public static DataTable GetUserList()
+        {
+            return SQLUtility.GetDataTable("select UserID, UserName from Users");
+        }      
 
         public static DataTable Load(int recipeID)
         {
-            string sql = "select r.*, c.CuisineName " +
+            string sql = "select r.*, c.CuisineName, u.UserName " +
                          "from recipe r " +
                          "join cuisine c on r.CuisineID = c.CuisineID " +
+                         "join Users u on r.UserID = u.UserID " +
                          "where r.RecipeID = " + recipeID.ToString();
 
-            return SQLUtility.GetDataTable(sql);
+            if (recipeID == 0)
+            {
+                sql = "select * from Recipe where RecipeID = 0";
+            }
+
+            DataTable dt = SQLUtility.GetDataTable(sql);
+
+            if (recipeID == 0)
+            {
+                DataRow r = dt.NewRow();
+
+                r["CuisineID"] = SQLUtility.GetFirstColumnFirstRowValue("select top 1 CuisineID from Cuisine");
+                r["UserID"] = SQLUtility.GetFirstColumnFirstRowValue("select top 1 UserID from Users");
+                r["RecipeName"] = "";
+                r["Calories"] = 0;
+                r["DraftDate"] = DateTime.Now;
+
+                dt.Rows.Add(r);
+            }
+
+            return dt;
         }
 
         public static void Save(DataTable dtRecipe)

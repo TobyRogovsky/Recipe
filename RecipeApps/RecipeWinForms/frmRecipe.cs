@@ -22,11 +22,34 @@ namespace RecipeWinForms
         {
             dtrecipe = Recipe.Load(recipeID);
 
+            DataTable dtCuisine = Recipe.GetCuisineList();
+            DataTable dtUser = Recipe.GetUserList();
+
+            if (recipeID == 0)
+            {
+                dtrecipe.Rows[0]["CuisineID"] = dtCuisine.Rows[0]["CuisineID"];
+                dtrecipe.Rows[0]["UserID"] = dtUser.Rows[0]["UserID"];
+
+                txtRecipeStatus.Text = "Draft";
+            }
+
             WinFormsUtility.SetControlBinding(txtRecipeName, dtrecipe);
             WinFormsUtility.SetControlBinding(txtCalories, dtrecipe);
             WinFormsUtility.SetControlBinding(dtpDraftDate, dtrecipe);
             WinFormsUtility.SetControlBinding(txtPublishedDate, dtrecipe);
             WinFormsUtility.SetControlBinding(txtArchivedDate, dtrecipe);
+
+            if (recipeID != 0)
+            {
+                WinFormsUtility.SetControlBinding(txtRecipeStatus, dtrecipe);
+            }
+
+            WinFormsUtility.SetListBinding(lstCuisineName, dtCuisine, dtrecipe, "Cuisine");
+            WinFormsUtility.SetListBinding(lstUserName, dtUser, dtrecipe, "User");
+
+            txtPublishedDate.ReadOnly = true;
+            txtArchivedDate.ReadOnly = true;
+            txtRecipeStatus.ReadOnly = true;
 
             this.Show();
         }
@@ -45,6 +68,6 @@ namespace RecipeWinForms
             Recipe.Save(dtrecipe);
         }
 
-
+        
     }
 }

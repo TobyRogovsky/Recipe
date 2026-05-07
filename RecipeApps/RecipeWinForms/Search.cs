@@ -33,6 +33,7 @@ namespace RecipeWinForms
         {
             DataTable dt = Recipe.GetListOfRecipes();
             gRecipe.DataSource = dt;
+            gRecipe.Columns["RecipeID"].Visible = false;
         }
       
 

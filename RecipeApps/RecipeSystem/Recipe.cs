@@ -91,15 +91,16 @@ namespace RecipeSystem
             else
             {
                 sql = string.Join(Environment.NewLine,
-                    "update Recipe set",
-                    "RecipeName = '" + r["RecipeName"] + "',",
-                    "Calories = " + r["Calories"] + ",",
-                    "DraftDate = '" + r["DraftDate"] + "',",
-                    "PublishedDate = " + publishedDate + ",",
-                    "ArchivedDate = " + archivedDate + ",",
-                    "CuisineID = " + r["CuisineID"],
-                    "where RecipeID = " + id
-                );
+                     "update Recipe set",
+                     "RecipeName = '" + r["RecipeName"] + "',",
+                     "Calories = " + r["Calories"] + ",",
+                     "DraftDate = '" + r["DraftDate"] + "',",
+                     "PublishedDate = " + publishedDate + ",",
+                     "ArchivedDate = " + archivedDate + ",",
+                     "CuisineID = " + r["CuisineID"] + ",",
+                     "UserID = " + r["UserID"],
+                     "where RecipeID = " + id
+                  );
             }
             
             System.Diagnostics.Debug.Print(sql);

@@ -31,7 +31,7 @@ namespace RecipeWinForms
 
         private void SearchRecipe(string recipename)
         {
-            DataTable dt = Recipe.GetListOfRecipes();
+            DataTable dt = Recipe.GetListOfRecipes(recipename);
             gRecipe.DataSource = dt;
             gRecipe.Columns["RecipeID"].Visible = false;
         }

@@ -109,7 +109,7 @@ namespace RecipeTest
             TestContext.Out.WriteLine("num of recipes in DB = " + recipecount);
             TestContext.Out.WriteLine("ensure that num of rows returned by app matches " + recipecount);
 
-            DataTable dt = Recipe.GetListOfRecipes();
+            DataTable dt = Recipe.GetListOfRecipes("");
             ClassicAssert.IsTrue(dt.Rows.Count == recipecount, "num rows returned by app " + dt.Rows.Count + "does not equal " + recipecount);
             TestContext.Out.WriteLine("number of rows in recipe returned by app = " + dt.Rows.Count);
 

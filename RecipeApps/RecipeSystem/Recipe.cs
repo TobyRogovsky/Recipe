@@ -1,51 +1,46 @@
 ﻿using CPUFramework;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace RecipeSystem
 {
     public class Recipe
     {
-        public static DataTable GetListOfRecipes()
+        public static DataTable GetListOfRecipes(string recipename)
         {
-            return SQLUtility.GetDataTable("select RecipeID, RecipeName from Recipe");
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeGet");
+            cmd.Parameters["@RecipeName"].Value = recipename;
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
         }
-        public static DataTable GetCuisineList()
+        public static DataTable GetCuisineList(int cuisineID)
         {
-            return SQLUtility.GetDataTable("select CuisineID, CuisineName from Cuisine");
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("CuisineGet");
+            cmd.Parameters["@CuisineID"].Value = cuisineID;
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
         }
 
-        public static DataTable GetUserList()
+        public static DataTable GetUserList(int userID)
         {
-            return SQLUtility.GetDataTable("select UserID, UserName from Users");
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("UserGet");
+            cmd.Parameters["@UserID"].Value = userID;
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
         }      
 
         public static DataTable Load(int recipeID)
         {
-            string sql = "select r.*, c.CuisineName, u.UserName " +
-                         "from recipe r " +
-                         "join cuisine c on r.CuisineID = c.CuisineID " +
-                         "join Users u on r.UserID = u.UserID " +
-                         "where r.RecipeID = " + recipeID.ToString();
-
-            if (recipeID == 0)
-            {
-                sql = "select * from Recipe where RecipeID = 0";
-            }
-
-            DataTable dt = SQLUtility.GetDataTable(sql);
-
-            if (recipeID == 0)
-            {
-                DataRow r = dt.NewRow();
-
-                r["CuisineID"] = SQLUtility.GetFirstColumnFirstRowValue("select top 1 CuisineID from Cuisine");
-                r["UserID"] = SQLUtility.GetFirstColumnFirstRowValue("select top 1 UserID from Users");
-                r["RecipeName"] = "";
-                r["Calories"] = 0;
-                r["DraftDate"] = DateTime.Now;
-
-                dt.Rows.Add(r);
-            }
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeGet");
+            cmd.Parameters["@RecipeID"].Value = recipeID;
+            dt = SQLUtility.GetDT(cmd);
 
             return dt;
         }

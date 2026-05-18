@@ -118,8 +118,56 @@ namespace RecipeTest
         private int GetExistingRecipeID()
         {
             return SQLUtility.GetFirstColumnFirstRowValue("select top 1 recipeID from recipe");
-        }      
+        }
+        [Test]
+        public void EditRecipeInvalidCalories()
+        {
+            int recipeID = GetExistingRecipeID();
+            Assume.That(recipeID > 0, "no recipes in db, can't run test");
+            int calories = SQLUtility.GetFirstColumnFirstRowValue("select top 1 calories from recipe where recipeID <> " + recipeID);
+            int currentcalories = SQLUtility.GetFirstColumnFirstRowValue("select top 1 calories from recipe where recipeID = " + recipeID);
+            calories = calories - calories;
+            TestContext.Out.WriteLine("change recipeID " + recipeID + " calories from " + currentcalories + " to " + calories);                     
+            DataTable dt = Recipe.Load(recipeID);
 
-      
+            dt.Rows[0]["calories"] = calories;
+            Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Save(dt))!;
+            TestContext.Out.WriteLine(ex.Message);
+            
+        }
+
+        [Test]
+        public void EditRecipeInvalidRecipeName()
+        {
+            int recipeID = GetExistingRecipeID();
+            Assume.That(recipeID > 0, "no recipes in db, can't run test");
+            string recipename = SQLUtility.GetDataTable("select top 1 recipename from recipe where recipeID <> " + recipeID).Rows[0][0].ToString()!;
+            string currentrecipename = SQLUtility.GetDataTable("select top 1 recipename from recipe where recipeID = " + recipeID).Rows[0][0].ToString()!;
+            TestContext.Out.WriteLine("change recipeID " + recipeID + " recipename from " + currentrecipename + " to " + recipename);
+            DataTable dt = Recipe.Load(recipeID);
+            dt.Rows[0]["recipename"] = recipename;
+
+            Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Save(dt))!;
+            TestContext.Out.WriteLine(ex.Message);
+        }
+
+        [Test]
+        public void EditRecipeInvalidDraftDate()
+        {
+            int recipID = GetExistingRecipeID();
+            Assume.That(recipID > 0, "no recipes in db, can't run test");
+
+            DataTable dt = Recipe.Load(recipID);
+
+            DateTime currentdraftdate = (DateTime)dt.Rows[0]["draftdate"];
+            DateTime draftdate = new DateTime(2000, 1, 1);
+
+            TestContext.Out.WriteLine("change recipeID " + recipID + " draftdate from " + currentdraftdate + " to " + draftdate);
+            dt.Rows[0]["draftdate"] = draftdate;
+
+            Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Save(dt))!;
+            TestContext.Out.WriteLine(ex.Message);
+        }
+
     }
 }

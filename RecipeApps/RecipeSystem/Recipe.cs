@@ -107,12 +107,12 @@ namespace RecipeSystem
         {
             int recipeID = (int)dtrecipe.Rows[0]["recipeID"];
             string sql = string.Join(Environment.NewLine,
-       "delete RecipeIngredient where recipeID = " + recipeID,
-       "delete Instruction where recipeID = " + recipeID,
-       "delete RecipeMealCourse where recipeID = " + recipeID,
-       "delete CookBookRecipe where recipeID = " + recipeID,
-       "delete Recipe where recipeID = " + recipeID
-   );
+         "delete RecipeIngredient where recipeID = " + recipeID,
+         "delete Instruction where recipeID = " + recipeID,
+         "delete RecipeMealCourse where recipeID = " + recipeID,
+         "delete CookBookRecipe where recipeID = " + recipeID,
+         "delete Recipe where recipeID = " + recipeID
+         );
             SQLUtility.ExecuteSQL(sql);
         }
         

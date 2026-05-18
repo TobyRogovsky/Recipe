@@ -53,21 +53,53 @@ namespace RecipeWinForms
 
             this.Show();
         }
+        private void Delete()
+        {
+            Application.UseWaitCursor = true;
+            try
+            {
+                Recipe.Delete(dtrecipe);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Recipe");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
+        }
+
+        private void Save()
+        {
+            Application.UseWaitCursor = true;
+            try
+            {
+                Recipe.Save(dtrecipe);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Recipe");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
+
+        }
 
 
         private void BtnDelete_Click(object? sender, EventArgs e)
         {
-            int id = (int)dtrecipe.Rows[0]["RecipeID"];
-            Recipe.Delete(dtrecipe);
-            this.Close();
+            Delete();
         }
 
         private void BtnSave_Click(object? sender, EventArgs e)
         {
-            this.Validate();
-            Recipe.Save(dtrecipe);
+            Save();
         }
 
-        
+
     }
 }

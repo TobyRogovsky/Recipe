@@ -1,4 +1,3 @@
-
 DROP TABLE if EXISTS Instruction
 
 DROP TABLE if EXISTS CookBookRecipe

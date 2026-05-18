@@ -1,5 +1,3 @@
-USE HeartyHearthDB
-go
 DELETE RecipeMealCourse
 GO
 DELETE CookBookRecipe
@@ -49,13 +47,13 @@ union select 'Mexican'
 union select 'Chinese'
 go 
 ; with x AS (
-  SELECT CuisineName = 'American', UserName = 'JSmith', RecipeName = 'Chocolate Chip Cookies', Calories = 300, DraftDate = '05-25-2000', PublishedDate = '08-10-2000',ArchivedDate = '01-01-2015'
-UNION ALL SELECT 'French', 'LAnderson', 'Apple Yogurt Smoothie', 150, '03-14-2001', NULL, NULL
-UNION ALL SELECT 'English', 'OJohnson', 'Cheese Bread', 200, '02-10-2002', '04-15-2002', '09-01-2002'
-UNION ALL SELECT 'American', 'SDavis', 'Butter Muffins', 250, '07-09-2003', '09-01-2003', NULL
-UNION ALL SELECT 'Indian', 'ETaylor', 'Spiced Chickpea Curry', 175, '01-20-2004', NULL, NULL
-UNION ALL SELECT 'Mexican', 'SMartinez', 'Cheese & Bean Enchiladas', 280, '04-12-2005', '06-10-2005', '11-15-2005'
-UNION ALL SELECT 'Chinese', 'DWhite', 'Vegetable Fried Rice', 100, '08-03-2006', '09-22-2006', NULL
+  SELECT CuisineName = 'American', UserName = 'JSmith', RecipeName = 'Chocolate Chip Cookies', Calories = 300, DraftDate = '10-27-2025', PublishedDate = '11-10-2025', ArchivedDate = '01-01-2026'
+UNION ALL SELECT 'French', 'LAnderson', 'Apple Yogurt Smoothie', 150, '10-28-2025', NULL, NULL
+UNION ALL SELECT 'English', 'OJohnson', 'Cheese Bread', 200, '10-29-2025', '11-15-2025', '12-01-2025'
+UNION ALL SELECT 'American', 'SDavis', 'Butter Muffins', 250, '10-30-2025', '11-01-2025', NULL
+UNION ALL SELECT 'Indian', 'ETaylor', 'Spiced Chickpea Curry', 175, '10-31-2025', NULL, NULL
+UNION ALL SELECT 'Mexican', 'SMartinez', 'Cheese & Bean Enchiladas', 280, '11-01-2025', '11-10-2025', '11-15-2025'
+UNION ALL SELECT 'Chinese', 'DWhite', 'Vegetable Fried Rice', 100, '11-02-2025', '11-22-2025', NULL
 )
 insert Recipe (CuisineID, UserID, RecipeName, Calories, DraftDate, PublishedDate, ArchivedDate)
 SELECT c.CuisineID, u.UserID, x.RecipeName, x.Calories, x.DraftDate, x.PublishedDate, x.archiveddate

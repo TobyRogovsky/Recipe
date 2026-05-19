@@ -22,6 +22,16 @@ namespace RecipeWinForms
         {
             dtrecipe = Recipe.Load(recipeID);
 
+            if (recipeID == 0)
+            {
+                DataRow r = dtrecipe.NewRow();
+                r["RecipeID"] = 0;
+                r["RecipeName"] = "";
+                r["DraftDate"] = DateTime.Now;
+                r["Calories"] = 0;
+                dtrecipe.Rows.Add(r);
+            }
+
             DataTable dtCuisine = Recipe.GetCuisineList(0);
             DataTable dtUser = Recipe.GetUserList(0);
 

@@ -168,6 +168,22 @@ namespace RecipeTest
             Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Save(dt))!;
             TestContext.Out.WriteLine(ex.Message);
         }
+        [Test]
+        public void EditRecipeInvalidCuisineID()
+        {
+            int recipID = GetExistingRecipeID();
+            Assume.That(recipID > 0, "no recipes in DB, can't run test");
+
+            DataTable dt = Recipe.Load(recipID);
+            int cuisineID = SQLUtility.GetFirstColumnFirstRowValue("select max (cuisineID) + 1 from Cuisine");
+
+            TestContext.Out.WriteLine("change reicpeID " + recipID + " cuisineID to invalid ID " + cuisineID);
+
+            dt.Rows[0]["cuisineID"] = cuisineID;
+
+            Exception ex = ClassicAssert.Throws<Exception> (() => Recipe.Save(dt))!;
+            TestContext.Out.WriteLine (ex.Message);
+        }
 
     }
 }

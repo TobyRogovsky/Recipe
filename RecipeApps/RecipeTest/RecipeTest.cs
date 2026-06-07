@@ -185,5 +185,27 @@ namespace RecipeTest
             TestContext.Out.WriteLine (ex.Message);
         }
 
+        [Test]
+        public void DeleteRecipeWithRelatedRecord()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 1 r.recipeID, r.RecipeName " +
+                "from recipe r left join " +
+                "CookBookRecipe cbr on r.recipeID = cbr.recipeID " +
+                "where cbr.cookbookrecipeID is not null"
+                );
+            int recipeID = 0;
+            string recipedesc = "";
+            if (dt.Rows.Count > 0)
+            {
+                recipeID = (int)dt.Rows[0]["recipeID"];
+                recipedesc = (string)dt.Rows[0]["RecipeName"];
+            }
+            Assume.That(recipeID > 0, "no recipes in cookbooks found in DB, can't run test");
+            TestContext.Out.WriteLine("existing recipe in cookbook with ID = " + recipeID + " " + recipedesc);
+            TestContext.Out.WriteLine("ensure that app cannot delete " + recipeID);
+            Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Delete(dt))!;
+            TestContext.Out.Write(ex.Message);
+        }
+
     }
 }

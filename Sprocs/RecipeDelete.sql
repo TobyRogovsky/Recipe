@@ -4,13 +4,17 @@ as
 begin
 begin try
 	begin tran
-	delete CookBookRecipe where RecipeID = @RecipeID
+
+	delete RecipeIngredient where RecipeID = @RecipeID
+	delete Instruction where RecipeID = @RecipeID
+
 	delete Recipe where RecipeID = @RecipeID
+
 	commit
-	end try
-	begin catch
+end try
+begin catch
 	rollback;
 	throw
-	end catch
+end catch
 end
 go

@@ -207,5 +207,31 @@ namespace RecipeTest
             TestContext.Out.Write(ex.Message);
         }
 
+        [Test]
+        public void DeletePublishedRecipe()
+        {
+            string sql = @" select top 1 r.RecipeID, r.RecipeName
+                from Recipe r
+                where r.PublishedDate is not null
+                and
+                (
+                    r.ArchivedDate is null
+                    or r.ArchivedDate >= dateadd(day, -30, getdate())
+                )";
+            
+            DataTable dt = SQLUtility.GetDataTable(sql);
+            int recipeID = 0;
+            string recipedesc = "";
+            if(dt.Rows.Count > 0)
+            {
+                recipeID = (int)dt.Rows[0]["recipeid"];
+                recipedesc = (string)dt.Rows[0]["RecipeName"];                
+            }
+            Assume.That(recipeID > 0, "no recipes that are drafted or archived for 30 days, can't run test");
+            TestContext.Out.WriteLine("existing recipe with draft/archived date that doesn't allow deletes with ID = " + recipeID + " " + recipedesc);
+            TestContext.Out.WriteLine("ensure that app cannot delete " + recipeID);
+            Exception ex = ClassicAssert.Throws<Exception>(() => Recipe.Delete(dt))!;
+            TestContext.Out.WriteLine(ex.Message);
+        }
     }
 }

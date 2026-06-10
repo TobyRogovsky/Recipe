@@ -11,7 +11,10 @@ namespace RecipeSystem
             DataTable dt = new();
             SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeGet");
             cmd.Parameters["@RecipeName"].Value = recipename;
-            cmd.Parameters["@All"].Value = 1;
+            if (recipename == "")
+            {
+                cmd.Parameters["@All"].Value = 1;
+            }
             dt = SQLUtility.GetDT(cmd);
             return dt;
         }

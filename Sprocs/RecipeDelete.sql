@@ -23,9 +23,7 @@ begin try
 	begin tran
 	
         delete RecipeIngredient where RecipeID = @RecipeID
-        delete Instruction where RecipeID = @RecipeID
-        delete RecipeMealCourse where RecipeID = @RecipeID
-        delete CookBookRecipe where RecipeID = @RecipeID
+        delete Instruction where RecipeID = @RecipeID       
         delete Recipe where RecipeID = @RecipeID
 
 	commit

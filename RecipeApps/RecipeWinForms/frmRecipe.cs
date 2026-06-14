@@ -1,14 +1,13 @@
-﻿using CPUFramework;
-using System.Data;
-using CPUWinFormsFramework;
-using System.Diagnostics;
+﻿using CPUWinFormsFramework;
 using RecipeSystem;
+using System.Data;
 
 namespace RecipeWinForms
 {
     public partial class frmRecipe : Form
     {
         DataTable dtrecipe;
+        BindingSource bindsource = new BindingSource();
         public frmRecipe()
         {
 
@@ -21,7 +20,8 @@ namespace RecipeWinForms
         public void ShowForm(int recipeID)
         {
             dtrecipe = Recipe.Load(recipeID);
-
+            bindsource.DataSource = dtrecipe;
+            
             if (recipeID == 0)
             {
                 DataRow r = dtrecipe.NewRow();
@@ -43,15 +43,15 @@ namespace RecipeWinForms
                 txtRecipeStatus.Text = "Draft";
             }
 
-            WinFormsUtility.SetControlBinding(txtRecipeName, dtrecipe);
-            WinFormsUtility.SetControlBinding(txtCalories, dtrecipe);
-            WinFormsUtility.SetControlBinding(dtpDraftDate, dtrecipe);
-            WinFormsUtility.SetControlBinding(txtPublishedDate, dtrecipe);
-            WinFormsUtility.SetControlBinding(txtArchivedDate, dtrecipe);
+            WinFormsUtility.SetControlBinding(txtRecipeName, bindsource);
+            WinFormsUtility.SetControlBinding(txtCalories, bindsource);
+            WinFormsUtility.SetControlBinding(dtpDraftDate, bindsource);
+            WinFormsUtility.SetControlBinding(txtPublishedDate, bindsource);
+            WinFormsUtility.SetControlBinding(txtArchivedDate, bindsource);
 
             if (recipeID != 0)
             {
-                WinFormsUtility.SetControlBinding(txtRecipeStatus, dtrecipe);
+                WinFormsUtility.SetControlBinding(txtRecipeStatus, bindsource);
             }
 
             WinFormsUtility.SetListBinding(lstCuisineName, dtCuisine, dtrecipe, "Cuisine");

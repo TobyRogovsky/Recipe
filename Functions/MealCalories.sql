@@ -4,7 +4,7 @@ as
 begin
 	declare @value int = 0
 
-	   select @value = isnull(sum(r.Calories), 0)
+	   select @value = sum(r.Calories)
     from Meal m
     join MealCourse mc
         on mc.MealID = m.MealID

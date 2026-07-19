@@ -1,4 +1,5 @@
-﻿using CPUWinFormsFramework;
+﻿using CPUFramework;
+using CPUWinFormsFramework;
 using RecipeSystem;
 using System.Data;
 
@@ -8,6 +9,7 @@ namespace RecipeWinForms
     {
         DataTable dtrecipe;
         BindingSource bindsource = new BindingSource();
+        int recipeid = 0;
         public frmRecipe()
         {
 
@@ -59,9 +61,8 @@ namespace RecipeWinForms
 
             txtPublishedDate.ReadOnly = true;
             txtArchivedDate.ReadOnly = true;
-            txtRecipeStatus.ReadOnly = true;
+            txtRecipeStatus.ReadOnly = true;            
 
-            this.Show();
         }
         private void Delete()
         {
@@ -74,6 +75,17 @@ namespace RecipeWinForms
             try
             {
                 Recipe.Delete(dtrecipe);
+
+                foreach (Form frm in MdiParent.MdiChildren)
+                {
+                    if (frm is frmRecipeList recipeList)
+                    {
+                        recipeList.LoadList();
+                        recipeList.Activate();
+                        break;
+                    }
+                }
+
                 this.Close();
             }
             catch (Exception ex)
@@ -86,12 +98,28 @@ namespace RecipeWinForms
             }
         }
 
-        private void Save()
+        private bool Save()
         {
+            bool b = false;
             Application.UseWaitCursor = true;
             try
             {
                 Recipe.Save(dtrecipe);
+                foreach (Form frm in MdiParent.MdiChildren)
+                {
+                    if (frm is frmRecipeList recipeList)
+                    {
+                        recipeList.LoadList();
+                        break;
+                    }
+                }
+                b = true;
+                bindsource.ResetBindings(false);
+                recipeid = SQLUtility.GetValueFromFirstRowAsInt(dtrecipe, "RecipeID");
+                this.Tag = recipeid;
+                MessageBox.Show("Recipe saved successfully.");
+
+
             }
             catch (Exception ex)
             {
@@ -102,8 +130,9 @@ namespace RecipeWinForms
                 Application.UseWaitCursor = false;
             }
 
+            return b;
         }
-
+        
 
         private void BtnDelete_Click(object? sender, EventArgs e)
         {
@@ -115,6 +144,10 @@ namespace RecipeWinForms
             Save();
         }
 
+        public void LoadForm(int recipeid)
+        {
+            ShowForm(recipeid);
+        }
 
     }
 }

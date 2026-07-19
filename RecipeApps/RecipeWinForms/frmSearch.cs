@@ -5,15 +5,15 @@ using RecipeSystem;
 
 namespace RecipeWinForms
 {
-    public partial class Search : Form
+    public partial class frmSearch : Form
     {
-        public Search()
+        public frmSearch()
         {
             InitializeComponent();            
             btnSearch.Click += BtnSearch_Click;
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
             btnNew.Click += BtnNew_Click;
-            WinFormsUtility.FormatGridForSearchResult(gRecipe);
+            WinFormsUtility.FormatGridForSearchResult(gRecipe, "Recipe");
         }
       
 

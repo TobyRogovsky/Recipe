@@ -36,7 +36,35 @@ namespace RecipeSystem
             cmd.Parameters["@All"].Value = 1;
             dt = SQLUtility.GetDT(cmd);
             return dt;
-        }      
+        }   
+        
+        public static DataTable GetRecipeList()
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeListGet");
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
+        }
+
+        public static DataTable GetMealList(int mealID)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("MealGet");
+            cmd.Parameters["@MealID"].Value = mealID;
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
+        }
+
+        public static DataTable GetCookbookList(int cookbookID)
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("CookbookGet");
+            cmd.Parameters["@CookbookID"].Value = cookbookID;
+            cmd.Parameters["@All"].Value = 1;
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
+        }
 
         public static DataTable Load(int recipeID)
         {
@@ -59,9 +87,7 @@ namespace RecipeSystem
 
             DataRow r = dtRecipe.Rows[0];
             SQLUtility.SaveDataRow(r, "RecipeUpdate");
-        }
-
-        
+        }       
         
 
         public static void Delete(DataTable dtrecipe)
@@ -70,6 +96,14 @@ namespace RecipeSystem
             SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeDelete");
             SQLUtility.SetParamValue(cmd, "@RecipeID", id);
             SQLUtility.ExecuteSQL(cmd);
+        }
+
+        public static DataTable GetDashboardStats()
+        {
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSQLCommand("DashboardGet");
+            dt = SQLUtility.GetDT(cmd);
+            return dt;
         }
         
     }

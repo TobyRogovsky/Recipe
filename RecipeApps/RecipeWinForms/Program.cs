@@ -15,7 +15,7 @@ namespace RecipeWinForms
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             SQLUtility.SetConnectionString();
-            Application.Run(new Search());
+            Application.Run(new frmMain());
         }
     }
 }

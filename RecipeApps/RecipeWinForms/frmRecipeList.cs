@@ -1,12 +1,6 @@
 ﻿using CPUWinFormsFramework;
 using RecipeSystem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace RecipeWinForms
 {
@@ -21,9 +15,8 @@ namespace RecipeWinForms
         }        
 
         public void LoadList()
-        {
-            DataTable dt = Recipe.GetRecipeList();
-            gRecipe.DataSource = dt;
+        {            
+            gRecipe.DataSource = Recipe.GetRecipeList();
             WinFormsUtility.FormatGridForSearchResult(gRecipe, "Recipe");
         }
 
@@ -35,7 +28,7 @@ namespace RecipeWinForms
 
         private void BtnNew_Click(object? sender, EventArgs e)
         {
-            ((frmMain)MdiParent!).OpenForm(typeof(frmRecipe));
+            ((frmMain)MdiParent!).OpenForm(typeof(frmRecipe), 0);
         }
 
         private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)

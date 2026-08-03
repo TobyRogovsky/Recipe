@@ -1,7 +1,6 @@
 ﻿namespace RecipeWinForms
 {
-    public partial class frmCookbookList
-        
+    partial class frmAutoCreateCookbook
     {
         /// <summary>
         /// Required designer variable.
@@ -30,63 +29,64 @@
         private void InitializeComponent()
         {
             tblMain = new TableLayoutPanel();
-            btnNew = new Button();
-            gCookbook = new DataGridView();
+            lstUser = new ComboBox();
+            btnCreateCookbook = new Button();
             tblMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gCookbook).BeginInit();
             SuspendLayout();
             // 
             // tblMain
             // 
-            tblMain.ColumnCount = 1;
+            tblMain.ColumnCount = 2;
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tblMain.Controls.Add(btnNew, 0, 0);
-            tblMain.Controls.Add(gCookbook, 0, 1);
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tblMain.Controls.Add(lstUser, 0, 0);
+            tblMain.Controls.Add(btnCreateCookbook, 1, 0);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
-            tblMain.RowCount = 2;
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 17.5555553F));
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 82.44444F));
+            tblMain.RowCount = 1;
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblMain.Size = new Size(800, 450);
             tblMain.TabIndex = 0;
             // 
-            // btnNew
+            // lstUser
             // 
-            btnNew.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnNew.Location = new Point(3, 3);
-            btnNew.Name = "btnNew";
-            btnNew.Size = new Size(161, 57);
-            btnNew.TabIndex = 0;
-            btnNew.Text = "New Cookbook";
-            btnNew.UseVisualStyleBackColor = true;
+            lstUser.Anchor = AnchorStyles.Left;
+            lstUser.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstUser.FormattingEnabled = true;
+            lstUser.ItemHeight = 21;
+            lstUser.Location = new Point(3, 213);
+            lstUser.Name = "lstUser";
+            lstUser.Size = new Size(286, 29);
+            lstUser.TabIndex = 0;
             // 
-            // gCookbook
+            // btnCreateCookbook
             // 
-            gCookbook.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gCookbook.Dock = DockStyle.Fill;
-            gCookbook.Location = new Point(3, 82);
-            gCookbook.Name = "gCookbook";
-            gCookbook.Size = new Size(794, 365);
-            gCookbook.TabIndex = 1;
+            btnCreateCookbook.Anchor = AnchorStyles.Right;
+            btnCreateCookbook.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnCreateCookbook.Location = new Point(567, 209);
+            btnCreateCookbook.Name = "btnCreateCookbook";
+            btnCreateCookbook.Size = new Size(230, 32);
+            btnCreateCookbook.TabIndex = 1;
+            btnCreateCookbook.Text = "Create Cookbook";
+            btnCreateCookbook.UseVisualStyleBackColor = true;
             // 
-            // frmCookbook
+            // frmAutoCreateCookbook
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(tblMain);
-            Name = "frmCookbook";
-            Text = "Cookbooks";
+            Name = "frmAutoCreateCookbook";
+            Text = "Auto-Create a Cookbook";
             tblMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gCookbook).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel tblMain;
-        private Button btnNew;
-        private DataGridView gCookbook;
+        private ComboBox lstUser;
+        private Button btnCreateCookbook;
     }
 }

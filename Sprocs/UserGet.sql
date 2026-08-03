@@ -1,4 +1,4 @@
-create or alter procedure dbo.UserGet(@UserID int = 0, @All bit = 0, @UserName varchar(21) = '')
+create or alter procedure dbo.UsersGet(@UserID int = 0, @All bit = 0, @UserName varchar(21) = '')
 as
 begin
 	select @UserName = nullif (@UserName, '')

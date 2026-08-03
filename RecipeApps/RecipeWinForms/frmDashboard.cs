@@ -1,5 +1,4 @@
-﻿using System.Data;
-using CPUWinFormsFramework;
+﻿using CPUWinFormsFramework;
 using RecipeSystem;
 
 namespace RecipeWinForms
@@ -17,12 +16,11 @@ namespace RecipeWinForms
 
         private void LoadDashboard()
         {
-            DataTable dt = Recipe.GetDashboardStats();
-            gData.DataSource = dt;
+            gData.DataSource = Recipe.GetDashboardStats();
             WinFormsUtility.FormatGridForSearchResult(gData, "Dashboard");
             gData.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
-                
+
 
         private void FrmDashboard_Shown(object? sender, EventArgs e)
         {
@@ -41,7 +39,7 @@ namespace RecipeWinForms
 
         private void BtnCookbookList_Click(object? sender, EventArgs e)
         {
-            ((frmMain)MdiParent!).OpenForm(typeof(frmCookBookList));
+            ((frmMain)MdiParent!).OpenForm(typeof(frmCookbookList));
         }
     }
 }

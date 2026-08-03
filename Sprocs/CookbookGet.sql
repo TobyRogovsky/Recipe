@@ -4,7 +4,7 @@ create or alter proc dbo.CookbookGet(
 )
 as
 begin
-	select c.cookbookid, c.cookbookname, c.Price, c.userID, u.Username, count(cr.recipeID) as NumRecipes
+	select c.cookbookid, c.cookbookname, c.Price, c.userID, u.Username, c.DateCookBookCreated,c.CookBookStatus, count(cr.recipeID) as NumRecipes
 	from CookBook c 
 	join users u
 	on u.userID = c.UserID
@@ -12,7 +12,7 @@ begin
 	on c.cookbookid = cr.cookbookid
 	where c.cookbookID = @cookbookID
 	or @all = 1
-	group by c.cookbookID, c.cookbookname, c.price, c.userID ,u.username
+	group by c.cookbookID, c.cookbookname, c.price, c.userID ,u.username, c.DateCookBookCreated,c.CookBookStatus
 	order by c.cookbookname
 
 

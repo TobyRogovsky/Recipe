@@ -1,12 +1,6 @@
 ﻿using CPUWinFormsFramework;
 using RecipeSystem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace RecipeWinForms
 {
@@ -15,13 +9,12 @@ namespace RecipeWinForms
         public frmMeal()
         {
             InitializeComponent();
-            this.Shown += FrmMeal_Shown;
-            gMeal.CellDoubleClick += GMeal_CellDoubleClick;
+            this.Shown += FrmMeal_Shown;            
         }       
 
         public void LoadList()
         {
-            DataTable dt = Recipe.GetMealList(0);
+            DataTable dt = DataMaintenance.GetDataList("Meal");
             gMeal.DataSource = dt;
             WinFormsUtility.FormatGridForSearchResult(gMeal, "Meal");
         }
@@ -30,14 +23,6 @@ namespace RecipeWinForms
         {
             LoadList();
         }
-
-        private void GMeal_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                int id = WinFormsUtility.GetIdFromGrid(gMeal, e.RowIndex, "MealID");
-                ((frmMain)MdiParent!).OpenForm(typeof(frmMeal), id);
-            }
-        }
+        
     }
 }

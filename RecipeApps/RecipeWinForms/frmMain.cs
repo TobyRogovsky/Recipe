@@ -12,78 +12,79 @@ namespace RecipeWinForms
             mnuRecipeNew.Click += MnuRecipeNew_Click;
             mnuCloneRecipe.Click += MnuCloneRecipe_Click;
             mnuMealList.Click += MnuMealList_Click;
+            mnuListCookbooks.Click += MnuListCookbooks_Click;
+            mnuCreateCookbook.Click += MnuCreateCookbook_Click;
+            mnuNewCookbook.Click += MnuNewCookbook_Click;
+            mnuCascade.Click += MnuCascade_Click;
+            mnuTile.Click += MnuTile_Click;            
+            mnuEditData.Click += MnuEditData_Click;
             this.Shown += FrmMain_Shown;
-        }
+        }        
 
-        
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
             OpenForm(typeof(frmDashboard));
         }
 
-        public void OpenForm(Type frmtype, int pkvalue = 0)
+        private Form? CreateForm(Type formType, int id)
         {
-            bool b = WinFormsUtility.IsFormOpen(frmtype, pkvalue);
+            if (formType == typeof(frmDashboard)) return new frmDashboard();
+            if (formType == typeof(frmCloneRecipe)) return new frmCloneRecipe();
+            if (formType == typeof(frmRecipeList)) return new frmRecipeList();
+            if (formType == typeof(frmDataMaintenance)) return new frmDataMaintenance();
+            if (formType == typeof(frmMeal)) return new frmMeal();
+            if (formType == typeof(frmCookbookList)) return new frmCookbookList();
+            if (formType == typeof(frmAutoCreateCookbook)) return new frmAutoCreateCookbook();
 
-            Form? newfrm = null;
-
-            if (b == false)
+            if (formType == typeof(frmRecipe))
             {
-                if (frmtype == typeof(frmDashboard))
-                {
-                    frmDashboard f = new();
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmCloneRecipe))
-                {
-                    frmCloneRecipe f = new();
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmRecipeList))
-                {
-                    frmRecipeList f = new();
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmRecipe))
-                {
-                    frmRecipe f = new();
-                    f.LoadForm(pkvalue);
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmMeal))
-                {
-                    frmMeal f = new();
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmCookBookList))
-                {
-                    frmCookBookList f = new();
-                    newfrm = f;
-                }
-                else if (frmtype == typeof(frmCookbook))
-                {
-                    frmCookbook f = new();
-                    f.ShowForm(pkvalue);
-                    newfrm = f;
-                }
+                frmRecipe frm = new();
+                frm.ShowForm(id);
+                return frm;
+            }
 
-                if (newfrm != null)
+            if (formType == typeof(frmCookbook))
+            {
+                frmCookbook frm = new();
+                frm.ShowForm(id);
+                return frm;
+            }
+
+            return null;
+        }
+        public void OpenForm(Type formType, int id = 0)
+        {
+            if (WinFormsUtility.IsFormOpen(formType, id))
+            {
+                return;
+            }
+            Form? newForm = CreateForm(formType, id);
+            if (newForm == null)
+            {
+                return;
+            }
+            newForm.MdiParent = this;
+            newForm.Tag = id;
+            if (formType != typeof(frmCloneRecipe))
+            {
+                newForm.WindowState = FormWindowState.Maximized;
+            }
+            newForm.FormClosed += Newfrm_FormClosed;
+            newForm.TextChanged += Newfrm_TextChanged;
+            newForm.Show();
+            WinFormsUtility.SetupNav(tsMain);
+        }
+
+        public T? GetOpenForm<T>() where T : Form
+        {
+            foreach (Form f in MdiChildren)
+            {
+                if (f is T)
                 {
-                    newfrm.MdiParent = this;
-                    newfrm.Tag = pkvalue;
-
-                    if (frmtype != typeof(frmCloneRecipe))
-                    {
-                        newfrm.WindowState = FormWindowState.Maximized;
-                    }
-
-                    newfrm.FormClosed += Newfrm_FormClosed;
-                    newfrm.TextChanged += Newfrm_TextChanged;
-
-                    newfrm.Show();
-                    WinFormsUtility.SetupNav(tsMain);
+                    return (T)f;
                 }
             }
+            return null;
         }
 
         private void Newfrm_TextChanged(object? sender, EventArgs e)
@@ -94,7 +95,21 @@ namespace RecipeWinForms
         private void Newfrm_FormClosed(object? sender, FormClosedEventArgs e)
         {
             WinFormsUtility.SetupNav(tsMain);
+        }       
+
+        private void MnuNewCookbook_Click(object? sender, EventArgs e)
+        {
+            OpenForm(typeof(frmCookbook), 0);
         }
+
+        private void MnuCreateCookbook_Click(object? sender, EventArgs e)
+        {
+            OpenForm(typeof(frmAutoCreateCookbook));
+        }
+        private void MnuListCookbooks_Click(object? sender, EventArgs e)
+        {
+            OpenForm(typeof(frmCookbookList));
+        }       
 
         private void MnuMealList_Click(object? sender, EventArgs e)
         {
@@ -108,7 +123,7 @@ namespace RecipeWinForms
 
         private void MnuRecipeNew_Click(object? sender, EventArgs e)
         {
-            OpenForm(typeof(frmRecipe));
+            OpenForm(typeof(frmRecipe), 0);
         }
 
         private void MnuRecipeList_Click(object? sender, EventArgs e)
@@ -118,6 +133,21 @@ namespace RecipeWinForms
         private void MnuDasbhoard_Click(object? sender, EventArgs e)
         {
             OpenForm(typeof(frmDashboard));
+        }
+
+        private void MnuTile_Click(object? sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.TileVertical);
+        }
+
+        private void MnuCascade_Click(object? sender, EventArgs e)
+        {
+            LayoutMdi(MdiLayout.Cascade);
+        }
+
+        private void MnuEditData_Click(object? sender, EventArgs e)
+        {
+            OpenForm(typeof(frmDataMaintenance));
         }
 
     }

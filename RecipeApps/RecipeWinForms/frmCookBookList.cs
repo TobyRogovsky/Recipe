@@ -4,44 +4,37 @@ using System.Data;
 
 namespace RecipeWinForms
 {
-    public partial class frmCookBookList : Form
+    public partial class frmCookbookList : Form
     {
-        public frmCookBookList()
+        public frmCookbookList()
         {
             InitializeComponent();
             btnNew.Click += BtnNew_Click;
-            this.Shown += FrmCookBookList_Shown;
-            gCookbook.DoubleClick += GCookbook_DoubleClick;
-        }      
+            this.Shown += FrmCookbookList_Shown;
+            gCookbook.CellDoubleClick += GCookbook_CellDoubleClick; 
+        }        
 
         public void LoadList()
         {
-            DataTable dt = Recipe.GetCookbookList(0);
+            DataTable dt = DataMaintenance.GetDataList("Cookbook");
             gCookbook.DataSource = dt;
-            gCookbook.Columns["CookbookID"]!.Visible = false;
-            gCookbook.Columns["CookBookStatus"]!.Visible = false;
-            gCookbook.Columns["NumRecipes"]!.Visible = false;
             WinFormsUtility.FormatGridForSearchResult(gCookbook, "Cookbook");
+            WinFormsUtility.HideColumns(gCookbook, "CookbookID", "CookbookStatus");
         }
 
-        private void FrmCookBookList_Shown(object? sender, EventArgs e)
+        private void FrmCookbookList_Shown(object? sender, EventArgs e)
         {
             LoadList();
         }
-        private void GCookbook_DoubleClick(object? sender, EventArgs e)
+        
+        private void GCookbook_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if (gCookbook.CurrentRow != null)
+            if (e.RowIndex > -1)
             {
-                int cookbookID =
-                    (int)gCookbook.CurrentRow.Cells["CookbookID"].Value!;
-
-                ((frmMain)MdiParent!).OpenForm(
-                    typeof(frmCookbook),
-                    cookbookID
-                );
+                int cookbookID = WinFormsUtility.GetIdFromGrid(gCookbook, e.RowIndex, "CookbookID");
+                ((frmMain)MdiParent!).OpenForm(typeof(frmCookbook), cookbookID);
             }
         }
-
 
         private void BtnNew_Click(object? sender, EventArgs e)
         {

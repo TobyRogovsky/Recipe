@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             tblMain = new TableLayoutPanel();
-            lstRecipes = new ComboBox();
+            lstRecipe = new ComboBox();
             btnClone = new Button();
             tblMain.SuspendLayout();
             SuspendLayout();
@@ -38,7 +38,7 @@
             // 
             tblMain.ColumnCount = 1;
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tblMain.Controls.Add(lstRecipes, 0, 0);
+            tblMain.Controls.Add(lstRecipe, 0, 0);
             tblMain.Controls.Add(btnClone, 0, 1);
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
@@ -48,15 +48,15 @@
             tblMain.Size = new Size(444, 141);
             tblMain.TabIndex = 0;
             // 
-            // lstRecipes
+            // lstRecipe
             // 
-            lstRecipes.Anchor = AnchorStyles.Left;
-            lstRecipes.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lstRecipes.FormattingEnabled = true;
-            lstRecipes.Location = new Point(3, 20);
-            lstRecipes.Name = "lstRecipes";
-            lstRecipes.Size = new Size(438, 29);
-            lstRecipes.TabIndex = 0;
+            lstRecipe.Anchor = AnchorStyles.Left;
+            lstRecipe.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lstRecipe.FormattingEnabled = true;
+            lstRecipe.Location = new Point(3, 20);
+            lstRecipe.Name = "lstRecipe";
+            lstRecipe.Size = new Size(438, 29);
+            lstRecipe.TabIndex = 0;
             // 
             // btnClone
             // 
@@ -88,7 +88,7 @@
         #endregion
 
         private TableLayoutPanel tblMain;
-        private ComboBox lstRecipes;
+        private ComboBox lstRecipe;
         private Button btnClone;
     }
 }

@@ -39,15 +39,18 @@
             mnuCloneRecipe = new ToolStripMenuItem();
             mnuMeals = new ToolStripMenuItem();
             mnuMealList = new ToolStripMenuItem();
-            mnuCookbooks = new ToolStripMenuItem();
-            mnuCookbookList = new ToolStripMenuItem();
-            mnuCookbookNew = new ToolStripMenuItem();
-            mnuAutoCreate = new ToolStripMenuItem();
+            mnuCookbook = new ToolStripMenuItem();
+            mnuListCookbooks = new ToolStripMenuItem();
+            mnuNewCookbook = new ToolStripMenuItem();
+            mnuCreateCookbook = new ToolStripMenuItem();
             mnuDataMaintenance = new ToolStripMenuItem();
             mnuEditData = new ToolStripMenuItem();
             mnuWindows = new ToolStripMenuItem();
             mnuTile = new ToolStripMenuItem();
             mnuCascade = new ToolStripMenuItem();
+            mnuCookbookList = new ToolStripMenuItem();
+            mnuCookbookNew = new ToolStripMenuItem();
+            mnuAutoCreate = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
             tsMain = new ToolStrip();
             tsbTab = new ToolStripButton();
@@ -57,10 +60,10 @@
             // 
             // mnuMain
             // 
-            mnuMain.Items.AddRange(new ToolStripItem[] { mnuFile, recipesToolStripMenuItem, mnuMeals, mnuCookbooks, mnuDataMaintenance, mnuWindows });
+            mnuMain.Items.AddRange(new ToolStripItem[] { mnuFile, recipesToolStripMenuItem, mnuMeals, mnuCookbook, mnuDataMaintenance, mnuWindows });
             mnuMain.Location = new Point(0, 0);
             mnuMain.Name = "mnuMain";
-            mnuMain.Size = new Size(800, 29);
+            mnuMain.Size = new Size(1084, 29);
             mnuMain.TabIndex = 0;
             mnuMain.Text = "menuStrip1";
             // 
@@ -118,31 +121,31 @@
             mnuMealList.Size = new Size(104, 26);
             mnuMealList.Text = "List";
             // 
-            // mnuCookbooks
+            // mnuCookbook
             // 
-            mnuCookbooks.DropDownItems.AddRange(new ToolStripItem[] { mnuCookbookList, mnuCookbookNew, mnuAutoCreate });
-            mnuCookbooks.Font = new Font("Segoe UI", 12F);
-            mnuCookbooks.Name = "mnuCookbooks";
-            mnuCookbooks.Size = new Size(100, 25);
-            mnuCookbooks.Text = "Cookbooks";
+            mnuCookbook.DropDownItems.AddRange(new ToolStripItem[] { mnuListCookbooks, mnuNewCookbook, mnuCreateCookbook });
+            mnuCookbook.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mnuCookbook.Name = "mnuCookbook";
+            mnuCookbook.Size = new Size(100, 25);
+            mnuCookbook.Text = "Cookbooks";
             // 
-            // mnuCookbookList
+            // mnuListCookbooks
             // 
-            mnuCookbookList.Name = "mnuCookbookList";
-            mnuCookbookList.Size = new Size(187, 26);
-            mnuCookbookList.Text = "List";
+            mnuListCookbooks.Name = "mnuListCookbooks";
+            mnuListCookbooks.Size = new Size(187, 26);
+            mnuListCookbooks.Text = "List";
             // 
-            // mnuCookbookNew
+            // mnuNewCookbook
             // 
-            mnuCookbookNew.Name = "mnuCookbookNew";
-            mnuCookbookNew.Size = new Size(187, 26);
-            mnuCookbookNew.Text = "New Cookbook";
+            mnuNewCookbook.Name = "mnuNewCookbook";
+            mnuNewCookbook.Size = new Size(187, 26);
+            mnuNewCookbook.Text = "New Cookbook";
             // 
-            // mnuAutoCreate
+            // mnuCreateCookbook
             // 
-            mnuAutoCreate.Name = "mnuAutoCreate";
-            mnuAutoCreate.Size = new Size(187, 26);
-            mnuAutoCreate.Text = "Auto Create";
+            mnuCreateCookbook.Name = "mnuCreateCookbook";
+            mnuCreateCookbook.Size = new Size(187, 26);
+            mnuCreateCookbook.Text = "Auto-Create";
             // 
             // mnuDataMaintenance
             // 
@@ -178,6 +181,24 @@
             mnuCascade.Size = new Size(137, 26);
             mnuCascade.Text = "Cascade";
             // 
+            // mnuCookbookList
+            // 
+            mnuCookbookList.Name = "mnuCookbookList";
+            mnuCookbookList.Size = new Size(187, 26);
+            mnuCookbookList.Text = "List";
+            // 
+            // mnuCookbookNew
+            // 
+            mnuCookbookNew.Name = "mnuCookbookNew";
+            mnuCookbookNew.Size = new Size(187, 26);
+            mnuCookbookNew.Text = "New Cookbook";
+            // 
+            // mnuAutoCreate
+            // 
+            mnuAutoCreate.Name = "mnuAutoCreate";
+            mnuAutoCreate.Size = new Size(187, 26);
+            mnuAutoCreate.Text = "Auto Create";
+            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
@@ -188,7 +209,7 @@
             tsMain.Items.AddRange(new ToolStripItem[] { tsbTab });
             tsMain.Location = new Point(0, 29);
             tsMain.Name = "tsMain";
-            tsMain.Size = new Size(800, 25);
+            tsMain.Size = new Size(1084, 25);
             tsMain.TabIndex = 2;
             tsMain.Text = "toolStrip1";
             // 
@@ -204,12 +225,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1084, 711);
             Controls.Add(tsMain);
             Controls.Add(mnuMain);
             IsMdiContainer = true;
             MainMenuStrip = mnuMain;
+            MinimumSize = new Size(900, 650);
             Name = "frmMain";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Hearty Hearth - Main";
             mnuMain.ResumeLayout(false);
             mnuMain.PerformLayout();
@@ -242,5 +265,9 @@
         private ToolStripMenuItem mnuCascade;
         private ToolStrip tsMain;
         private ToolStripButton tsbTab;
+        private ToolStripMenuItem mnuCookbook;
+        private ToolStripMenuItem mnuListCookbooks;
+        private ToolStripMenuItem mnuNewCookbook;
+        private ToolStripMenuItem mnuCreateCookbook;
     }
 }

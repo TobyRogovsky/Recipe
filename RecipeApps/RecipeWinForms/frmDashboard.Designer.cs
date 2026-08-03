@@ -92,7 +92,7 @@
             lblDesc.Name = "lblDesc";
             lblDesc.Size = new Size(703, 87);
             lblDesc.TabIndex = 1;
-            lblDesc.Text = "Welcome to the Hearty Hearth desktop app. In this app, you can create recipes and cookbooks.";
+            lblDesc.Text = "Welcome to the Hearty Hearth desktop app. In this app, you can create recipes and Cookbooks.";
             lblDesc.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // gData

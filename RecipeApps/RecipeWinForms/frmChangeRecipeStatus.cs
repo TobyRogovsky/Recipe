@@ -15,14 +15,13 @@ namespace RecipeWinForms
             btnArchive.Click += BtnArchive_Click;
         }
 
-        public DialogResult ShowForm(int recipeID)
+        public void ShowForm(int recipeID)
         {
             recipeid = recipeID;
             if (!LoadRecipe())
             {
-                return DialogResult.Cancel;
+                Close();
             }
-            return ShowDialog();
         }
 
         private bool LoadRecipe()
@@ -68,12 +67,22 @@ namespace RecipeWinForms
             try
             {
                 Recipe.ChangeStatus(recipeid, newStatus);
-                DialogResult = DialogResult.OK;
+
+                frmRecipe? recipeForm = ((frmMain)MdiParent!).GetOpenForm<frmRecipe>(recipeid);
+                if (recipeForm != null)
+                {
+                    recipeForm.ReloadRecipe(recipeid);
+                }
+                frmRecipeList? recipeList = ((frmMain)MdiParent!).GetOpenForm<frmRecipeList>();
+                if (recipeList != null)
+                {
+                    recipeList.LoadList();
+                }
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Unable to Change Status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message,"Unable to Change Status",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
 

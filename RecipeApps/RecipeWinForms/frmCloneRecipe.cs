@@ -24,23 +24,22 @@ namespace RecipeWinForms
         }
         private void Clone()
         {
-            int recipeID =WinFormsUtility.GetIDFromComboBox(lstRecipe);
+            int recipeID = WinFormsUtility.GetIDFromComboBox(lstRecipe);
             if (recipeID == 0)
             {
-                MessageBox.Show("Please select a recipe.","Clone Recipe");
+                MessageBox.Show("Please select a recipe.", "Clone Recipe");
                 return;
             }
             try
             {
-                Recipe.Clone(recipeID);
+                int newRecipeID = Recipe.Clone(recipeID);
                 frmMain main = (frmMain)MdiParent!;
-                main.OpenForm(typeof(frmRecipeList));
-                main.GetOpenForm<frmRecipeList>()?.LoadList();
+                main.OpenForm(typeof(frmRecipe), newRecipeID);
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"Clone Recipe");
+                MessageBox.Show(ex.Message, "Clone Recipe");
             }
         }
 

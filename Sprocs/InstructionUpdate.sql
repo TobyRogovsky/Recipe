@@ -12,17 +12,8 @@ begin
     if @InstructionID = 0
     begin
         insert Instruction
-        (
-            RecipeID,
-            Instructions,
-            InstructionSequence
-        )
-        values
-        (
-            @RecipeID,
-            @Instructions,
-            @InstructionSequence
-        )
+        (RecipeID, Instructions, InstructionSequence)
+        values (@RecipeID, @Instructions, @InstructionSequence)
 
         select @InstructionID = scope_identity()
     end

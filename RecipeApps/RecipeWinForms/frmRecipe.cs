@@ -44,6 +44,14 @@ namespace RecipeWinForms
                 LoadRecipeIngredients();
                 LoadInstructions();
             }
+            if (recipeID != 0)
+            {
+                Text = "Recipe - " + dtrecipe.Rows[0]["RecipeName"];
+            }
+            else
+            {
+                Text = "Recipe - New";
+            }
         }
 
         private void BindRecipeControls()
@@ -60,10 +68,11 @@ namespace RecipeWinForms
         {
             int recipeID = SQLUtility.GetValueFromFirstRowAsInt(dtrecipe, "RecipeID");
             dtrecipeingredient = Recipe.GetRecipeIngredientList(recipeID);
-            gIngredients.AutoGenerateColumns = false;
+            gIngredients.AutoGenerateColumns = false;            
             gIngredients.Columns.Clear();
             AddIngredientColumns();
             gIngredients.AllowUserToAddRows = true;
+            gIngredients.ScrollBars = ScrollBars.Both;
             gIngredients.DataSource = dtrecipeingredient;
         }
 
@@ -71,13 +80,16 @@ namespace RecipeWinForms
         {
             DataTable dtIngredient = DataMaintenance.GetDataList("Ingredient");
             DataTable dtMeasurement = DataMaintenance.GetDataList("Measurement");
-            WinFormsUtility.AddComboBoxToGrid(gIngredients, dtIngredient, "Ingredient", "IngredientName", 0);
-            WinFormsUtility.AddComboBoxToGrid(gIngredients, dtMeasurement, "Measurement", "MeasurementType", 1);
-            gIngredients.Columns.Add(CreateTextColumn("Amount", "Amount", 75));
-            gIngredients.Columns.Add(CreateTextColumn("Sequence", "IngredientSequence", 75));
-            WinFormsUtility.AddDeleteButtonToGrid(gIngredients, "Delete");
-        }        
-
+            WinFormsUtility.AddComboBoxToGrid(gIngredients,dtIngredient, "Ingredient","IngredientName", 0);
+            WinFormsUtility.AddComboBoxToGrid(gIngredients,dtMeasurement,"Measurement","MeasurementType",1);
+            gIngredients.Columns["Ingredient"]!.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            gIngredients.Columns["Ingredient"]!.Width = 220;
+            gIngredients.Columns["Measurement"]!.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            gIngredients.Columns["Measurement"]!.Width = 160;
+            gIngredients.Columns.Add(CreateTextColumn("Amount", "Amount", 100));
+            gIngredients.Columns.Add(CreateTextColumn("Sequence","IngredientSequence",100));
+            WinFormsUtility.AddDeleteButtonToGrid(gIngredients,"Delete");
+        }
         private DataGridViewTextBoxColumn CreateTextColumn(string headerText, string dataPropertyName, int width)
         {
             return new DataGridViewTextBoxColumn
@@ -161,7 +173,7 @@ namespace RecipeWinForms
             }
         }
 
-        private void ReloadRecipe(int recipeID)
+        public void ReloadRecipe(int recipeID)
         {
             dtrecipe = Recipe.Load(recipeID);
             bindsource.DataSource = dtrecipe;
@@ -228,16 +240,19 @@ namespace RecipeWinForms
 
         private bool Save()
         {
-            bool saved = false;
-
+            bool saved = false;            
+            if (!WinFormsUtility.IsInteger(txtCalories, "Calories"))
+            {
+                return false;
+            }
             Application.UseWaitCursor = true;
-
             try
             {
                 bindsource.EndEdit();
                 Recipe.Save(dtrecipe);
                 int recipeID =SQLUtility.GetValueFromFirstRowAsInt(dtrecipe,"RecipeID");
                 Tag = recipeID;
+                Text = "Recipe - " + dtrecipe.Rows[0]["RecipeName"].ToString();
                 RefreshRecipeList();
                 SetExistingRecipeControls(recipeID != 0);
                 LoadRecipeIngredients();
@@ -298,23 +313,15 @@ namespace RecipeWinForms
             {
                 return;
             }
-
             int recipeID = SQLUtility.GetValueFromFirstRowAsInt(dtrecipe, "RecipeID");
-
             if (recipeID == 0)
             {
                 MessageBox.Show("Save the recipe before changing its status.", "Recipe");
                 return;
             }
-
-            frmChangeRecipeStatus frm = new();
-
-            if (frm.ShowForm(recipeID) == DialogResult.OK)
-            {
-                ReloadRecipe(recipeID);
-                RefreshRecipeList();
-            }
+            ((frmMain)MdiParent!).OpenForm(typeof(frmChangeRecipeStatus), recipeID);
         }
+        
 
         private void BtnSaveIngredient_Click(object? sender, EventArgs e)
         {

@@ -42,9 +42,9 @@
             // tblMain
             // 
             tblMain.ColumnCount = 3;
-            tblMain.ColumnStyles.Add(new ColumnStyle());
-            tblMain.ColumnStyles.Add(new ColumnStyle());
-            tblMain.ColumnStyles.Add(new ColumnStyle());
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tblMain.Controls.Add(btnMealList, 1, 3);
             tblMain.Controls.Add(lblHeartyHearth, 0, 0);
             tblMain.Controls.Add(lblDesc, 0, 1);
@@ -56,16 +56,16 @@
             tblMain.Name = "tblMain";
             tblMain.RowCount = 4;
             tblMain.RowStyles.Add(new RowStyle());
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 19.81982F));
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 51.2415352F));
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 29.1196384F));
-            tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 19.7840137F));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 51.1489563F));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 29.06703F));
             tblMain.Size = new Size(709, 503);
             tblMain.TabIndex = 0;
             // 
             // btnMealList
             // 
-            btnMealList.Location = new Point(135, 376);
+            btnMealList.Anchor = AnchorStyles.None;
+            btnMealList.Location = new Point(291, 409);
             btnMealList.Name = "btnMealList";
             btnMealList.Size = new Size(126, 57);
             btnMealList.TabIndex = 4;
@@ -92,7 +92,7 @@
             lblDesc.Name = "lblDesc";
             lblDesc.Size = new Size(703, 87);
             lblDesc.TabIndex = 1;
-            lblDesc.Text = "Welcome to the Hearty Hearth desktop app. In this app, you can create recipes and Cookbooks.";
+            lblDesc.Text = "Welcome to the Hearty Hearth desktop app. In this app, you can create recipes and cookbooks.";
             lblDesc.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // gData
@@ -108,7 +108,8 @@
             // 
             // btnRecipeList
             // 
-            btnRecipeList.Location = new Point(3, 376);
+            btnRecipeList.Anchor = AnchorStyles.None;
+            btnRecipeList.Location = new Point(55, 409);
             btnRecipeList.Name = "btnRecipeList";
             btnRecipeList.Size = new Size(126, 57);
             btnRecipeList.TabIndex = 3;
@@ -117,7 +118,8 @@
             // 
             // btnCookbookList
             // 
-            btnCookbookList.Location = new Point(267, 376);
+            btnCookbookList.Anchor = AnchorStyles.None;
+            btnCookbookList.Location = new Point(527, 409);
             btnCookbookList.Name = "btnCookbookList";
             btnCookbookList.Size = new Size(126, 57);
             btnCookbookList.TabIndex = 5;

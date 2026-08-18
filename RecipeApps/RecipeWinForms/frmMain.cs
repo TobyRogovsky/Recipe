@@ -35,7 +35,12 @@ namespace RecipeWinForms
             if (formType == typeof(frmMeal)) return new frmMeal();
             if (formType == typeof(frmCookbookList)) return new frmCookbookList();
             if (formType == typeof(frmAutoCreateCookbook)) return new frmAutoCreateCookbook();
-
+            if (formType == typeof(frmChangeRecipeStatus))
+            {
+                frmChangeRecipeStatus frm = new();
+                frm.ShowForm(id);
+                return frm;
+            }
             if (formType == typeof(frmRecipe))
             {
                 frmRecipe frm = new();
@@ -64,11 +69,8 @@ namespace RecipeWinForms
                 return;
             }
             newForm.MdiParent = this;
-            newForm.Tag = id;
-            if (formType != typeof(frmCloneRecipe))
-            {
-                newForm.WindowState = FormWindowState.Maximized;
-            }
+            newForm.Tag = id;            
+            newForm.WindowState = FormWindowState.Maximized;
             newForm.FormClosed += Newfrm_FormClosed;
             newForm.TextChanged += Newfrm_TextChanged;
             newForm.Show();
@@ -80,6 +82,18 @@ namespace RecipeWinForms
             foreach (Form f in MdiChildren)
             {
                 if (f is T)
+                {
+                    return (T)f;
+                }
+            }
+            return null;
+        }
+
+        public T? GetOpenForm<T>(int id) where T : Form
+        {
+            foreach (Form f in MdiChildren)
+            {
+                if (f is T && f.Tag is int formID && formID == id)
                 {
                     return (T)f;
                 }

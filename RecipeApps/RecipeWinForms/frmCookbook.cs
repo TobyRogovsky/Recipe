@@ -33,21 +33,21 @@ namespace RecipeWinForms
             }
             if (cookbookID == 0)
             {
-                dtCookbook.Rows[0]["UserID"] = dtUser.Rows[0]["UserID"];
+                this.Text = "Cookbook - New";
             }
-            if (cookbookID == 0)
+            else
             {
-                dtCookbook.Rows[0]["UserID"] =
-                    dtUser.Rows[0]["UserID"];
-            }            
+                this.Text = "Cookbook - " + dtCookbook.Rows[0]["CookbookName"].ToString();
+            }
             WinFormsUtility.SetControlBinding(chkCookbookStatus, bindsource);
             WinFormsUtility.SetControlBinding(txtCookbookName,bindsource);
-            WinFormsUtility.SetControlBinding(txtPrice,bindsource);
+            txtPrice.DataBindings.Clear();            
+            txtPrice.Text = dtCookbook.Rows[0]["Price"].ToString();
             WinFormsUtility.SetListBinding(lstUserName,dtUser,dtCookbook, "User");
             WinFormsUtility.SetControlBinding(dtpDateCookbookCreated,bindsource);
             LoadCookbookRecipes(cookbookID);
             SetExistingCookbookControls(cookbookID != 0);
-            this.Tag = cookbookID;
+            this.Tag = cookbookID;            
         }
 
         private void SetupCookbookRecipeGrid()
@@ -96,28 +96,33 @@ namespace RecipeWinForms
         {
             bool saved = false;
 
+            if (!WinFormsUtility.IsDecimal(txtPrice, "Price"))
+            {
+                return false;
+            }
             Application.UseWaitCursor = true;
-
             try
             {
                 bindsource.EndEdit();
-                int cookbookID = Cookbook.Save(dtCookbook);             
+                dtCookbook.Rows[0]["Price"] = decimal.Parse(txtPrice.Text);
+                dtCookbook.Rows[0]["CookbookStatus"] = chkCookbookStatus.Checked;
+                int cookbookID = Cookbook.Save(dtCookbook);
                 this.Tag = cookbookID;
+                this.Text = "Cookbook - " + dtCookbook.Rows[0]["CookbookName"].ToString();
                 RefreshCookbookList();
                 bindsource.ResetBindings(false);
                 SetExistingCookbookControls(cookbookID != 0);
-                MessageBox.Show("Cookbook saved successfully.","Cookbook");
+                MessageBox.Show("Cookbook saved successfully.", "Cookbook");
                 saved = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show( ex.Message, "Cookbook");
+                MessageBox.Show(ex.Message, "Cookbook");
             }
             finally
             {
                 Application.UseWaitCursor = false;
             }
-
             return saved;
         }
 

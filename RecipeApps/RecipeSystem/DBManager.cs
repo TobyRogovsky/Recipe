@@ -1,7 +1,4 @@
 ﻿using CPUFramework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RecipeSystem
 {
@@ -9,8 +6,9 @@ namespace RecipeSystem
     {
         public static void SetConnectionString(string connectionstring)
         {
-            SQLUtility.ConnectionString = connectionstring;
+            SQLUtility.SetConnString(connectionstring, true);
         }
-
     }
 }
+
+    

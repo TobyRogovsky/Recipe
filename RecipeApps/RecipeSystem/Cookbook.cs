@@ -27,30 +27,21 @@ namespace RecipeSystem
 
         public static void SaveCookbookRecipes(DataTable dtCookbookRecipe, int cookbookID)
         {
+            if (dtCookbookRecipe.Columns.Contains("CookbookRecipeID"))
+            {
+                dtCookbookRecipe.Columns["CookbookRecipeID"]!.ReadOnly = false;
+            }
             foreach (DataRow r in dtCookbookRecipe.Rows)
             {
-                if (r.RowState == DataRowState.Deleted ||
-                    r["RecipeID"] == DBNull.Value ||
-                    r["RecipeSequence"] == DBNull.Value)
+                if (r.RowState == DataRowState.Deleted || r["RecipeID"] == DBNull.Value || r["RecipeSequence"] == DBNull.Value)
                 {
                     continue;
                 }
-
-                int cookbookRecipeID = r["CookbookRecipeID"] == DBNull.Value
-                    ? 0
-                    : Convert.ToInt32(r["CookbookRecipeID"]);
-
-                int newID = SaveCookbookRecipe(
-                    cookbookRecipeID,
-                    cookbookID,
-                    Convert.ToInt32(r["RecipeID"]),
-                    Convert.ToInt32(r["RecipeSequence"])
-                );
-
+                int cookbookRecipeID = r["CookbookRecipeID"] == DBNull.Value ? 0 : Convert.ToInt32(r["CookbookRecipeID"]);
+                int newID = SaveCookbookRecipe(cookbookRecipeID,cookbookID,Convert.ToInt32(r["RecipeID"]),Convert.ToInt32(r["RecipeSequence"]));
                 r["CookbookRecipeID"] = newID;
                 r["CookbookID"] = cookbookID;
             }
-
             dtCookbookRecipe.AcceptChanges();
         }
 

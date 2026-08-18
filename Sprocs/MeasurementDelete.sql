@@ -4,7 +4,12 @@ create or alter proc dbo.MeasurementDelete
 )
 as
 begin
+
+    delete RecipeIngredient
+    where MeasurementID = @MeasurementID
+
     delete Measurement
     where MeasurementID = @MeasurementID
+
 end
 go

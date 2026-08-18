@@ -3,62 +3,29 @@ create or alter proc RecipeClone
 as
 begin
     set nocount on;
-
     begin try
         begin transaction;
 
         declare @NewRecipeID int;
 
         insert Recipe
-        (
-            RecipeName,
-            Calories,
-            DraftDate,
-            PublishedDate,
-            ArchivedDate,
-            CuisineID,
-            UserID
-        )
-        select
-            RecipeName + ' - clone',
-            Calories,
-            getdate(),
-            null,
-            null,
-            CuisineID,
-            UserID
+        (RecipeName,Calories, DraftDate, PublishedDate, ArchivedDate, CuisineID,UserID)
+        select RecipeName + ' - clone', Calories,getdate(),null,null,CuisineID, UserID
         from Recipe
         where RecipeID = @RecipeID;
-
         set @NewRecipeID = scope_identity();
 
         insert RecipeIngredient
-        (
-            RecipeID,
-            IngredientID,
-            MeasurementID,
-            Amount,
-            IngredientSequence
-        )
-        select
-            @NewRecipeID,
-            IngredientID,
-            MeasurementID,
-            Amount,
-            IngredientSequence
+        (RecipeID, IngredientID,MeasurementID,Amount,IngredientSequence)
+
+        select @NewRecipeID, IngredientID, MeasurementID, Amount,IngredientSequence
         from RecipeIngredient
         where RecipeID = @RecipeID;
 
         insert Instruction
-        (
-            RecipeID,
-            InstructionSequence,
-            Instructions
-        )
-        select
-            @NewRecipeID,
-            InstructionSequence,
-            Instructions
+        (RecipeID, InstructionSequence,Instructions)
+
+        select @NewRecipeID,InstructionSequence,Instructions
         from Instruction
         where RecipeID = @RecipeID;
 

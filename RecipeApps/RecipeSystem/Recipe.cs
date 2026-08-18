@@ -17,16 +17,17 @@ namespace RecipeSystem
             }
             dt = SQLUtility.GetDT(cmd);
             return dt;
-        }        
-        
+        }
+
         public static DataTable GetRecipeList()
         {
             DataTable dt = new();
-            SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeListGet");
+            SqlCommand cmd = SQLUtility.GetSQLCommand("RecipeGet");
+            cmd.Parameters["@All"].Value = 1;
             dt = SQLUtility.GetDT(cmd);
             return dt;
         }
-        
+
 
         public static DataTable GetInstructionList(int recipeID)
         {

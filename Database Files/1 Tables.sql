@@ -62,11 +62,11 @@ RecipeStatus AS
     END,
 RecipePicture AS ('Recipe_' + REPLACE(RecipeName, ' ', '_') + '.jpg'),
 CONSTRAINT ck_draft_date_must_be_before_published_date
-    CHECK (DraftDate < PublishedDate),
+    CHECK (DraftDate <= PublishedDate),
 CONSTRAINT ck_published_date_must_be_before_archived_date
-    CHECK (PublishedDate < ArchivedDate),
+    CHECK (PublishedDate <= ArchivedDate),
 CONSTRAINT ck_draft_date_must_be_before_archived_date
-    CHECK (DraftDate < ArchivedDate)
+    CHECK (DraftDate <= ArchivedDate)
 )
 go
 CREATE TABLE dbo.Measurement(

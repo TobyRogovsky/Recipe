@@ -5,44 +5,27 @@ create or alter proc dbo.CookbookUpdate
     @UserID int,
     @CookbookName varchar(100),
     @Price decimal(10, 2),
+    @CookbookStatus bit,
     @DateCookBookCreated date
 )
 as
 begin
     declare @return int = 0
-
     select @CookbookID = isnull(@CookbookID, 0)
 
     if @CookbookID = 0
     begin
         insert Cookbook
-        (
-            UserID,
-            CookbookName,
-            Price,
-            DateCookBookCreated
-        )
-        values
-        (
-            @UserID,
-            @CookbookName,
-            @Price,
-            @DateCookBookCreated
-        )
-
+        (UserID, CookbookName,Price,CookbookStatus, DateCookBookCreated)
+        values (@UserID, @CookbookName,@Price,@CookbookStatus,@DateCookBookCreated)
         select @CookbookID = scope_identity()
     end
     else
     begin
         update Cookbook
-        set
-            UserID = @UserID,
-            CookbookName = @CookbookName,
-            Price = @Price,
-            DateCookBookCreated = @DateCookBookCreated
+        set UserID = @UserID,CookbookName = @CookbookName,Price = @Price, CookbookStatus = @CookbookStatus, DateCookBookCreated = @DateCookBookCreated
         where CookbookID = @CookbookID
     end
-
     return @return
 end
 go

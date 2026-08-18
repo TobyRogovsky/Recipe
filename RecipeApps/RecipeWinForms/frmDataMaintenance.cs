@@ -7,9 +7,9 @@ namespace RecipeWinForms
 {   
     public partial class frmDataMaintenance : Form
     {
-        private enum TableTypeEnum { Recipe, Cookbook, Meal, User, Ingredient, Course, Instruction, Cuisine, Measurement}
+        private enum TableTypeEnum { User, Ingredient, Course,  Cuisine, Measurement}
         DataTable dtlist = new();
-        TableTypeEnum currenttabletype = TableTypeEnum.Recipe;
+        TableTypeEnum currenttabletype = TableTypeEnum.User;
         string deletecolname = "deletecol";
         public frmDataMaintenance()
         {
@@ -54,10 +54,25 @@ namespace RecipeWinForms
         }
 
         private void Delete(int rowindex)
-        {
+        {            
             int id = WinFormsUtility.GetIdFromGrid(gData, rowindex, currenttabletype.ToString() + "ID");
             if (id != 0)
             {
+                DialogResult response;
+
+                if (currenttabletype == TableTypeEnum.User)
+                {
+                    response = MessageBox.Show( "Are you sure you want to delete this user and all related recipes, meals, and cookbooks?", "Delete User",
+                        MessageBoxButtons.YesNo);
+                }
+                else
+                {
+                    response = MessageBox.Show("Are you sure you want to delete this record?", "Delete " + currenttabletype.ToString(),MessageBoxButtons.YesNo);
+                }
+                if (response == DialogResult.No)
+                {
+                    return;
+                }
                 try
                 {
                     DataMaintenance.DeleteRow(currenttabletype.ToString(), id);
@@ -82,14 +97,10 @@ namespace RecipeWinForms
                 {
                     c.Click += C_Click;
                 }
-            }
-            rbnRecipe.Tag = TableTypeEnum.Recipe;
-            rbnCookbook.Tag = TableTypeEnum.Cookbook;
+            }            
             rbnCourse.Tag = TableTypeEnum.Course;
             rbnCuisine.Tag = TableTypeEnum.Cuisine;
-            rbnIngredients.Tag = TableTypeEnum.Ingredient;
-            rbnInstruction.Tag = TableTypeEnum.Instruction;
-            rbnMeal.Tag = TableTypeEnum.Meal;
+            rbnIngredients.Tag = TableTypeEnum.Ingredient;            
             rbnMeasurement.Tag = TableTypeEnum.Measurement;
             rbnUsers.Tag = TableTypeEnum.User;
         }

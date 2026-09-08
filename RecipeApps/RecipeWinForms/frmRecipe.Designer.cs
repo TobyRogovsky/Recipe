@@ -186,15 +186,15 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(btnSaveSteps, 0, 0);
             tableLayoutPanel1.Controls.Add(gSteps, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(3, 3);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.6153851F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 85.38461F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Size = new Size(968, 201);
             tableLayoutPanel1.TabIndex = 0;
             // 
@@ -203,7 +203,7 @@
             btnSaveSteps.AutoSize = true;
             btnSaveSteps.Location = new Point(3, 3);
             btnSaveSteps.Name = "btnSaveSteps";
-            btnSaveSteps.Size = new Size(194, 23);
+            btnSaveSteps.Size = new Size(194, 31);
             btnSaveSteps.TabIndex = 1;
             btnSaveSteps.Text = "Save Steps";
             btnSaveSteps.UseVisualStyleBackColor = true;
@@ -212,10 +212,10 @@
             // 
             gSteps.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gSteps.Dock = DockStyle.Fill;
-            gSteps.Location = new Point(3, 32);
+            gSteps.Location = new Point(3, 40);
             gSteps.Name = "gSteps";
             gSteps.ScrollBars = ScrollBars.Vertical;
-            gSteps.Size = new Size(962, 166);
+            gSteps.Size = new Size(962, 158);
             gSteps.TabIndex = 2;
             // 
             // lstUserName

@@ -75,6 +75,7 @@
             // lblHeartyHearth
             // 
             tblMain.SetColumnSpan(lblHeartyHearth, 3);
+            lblHeartyHearth.Dock = DockStyle.Fill;
             lblHeartyHearth.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHeartyHearth.Location = new Point(3, 0);
             lblHeartyHearth.Name = "lblHeartyHearth";

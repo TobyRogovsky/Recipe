@@ -38,13 +38,12 @@ namespace RecipeWinForms
             Cursor = Cursors.WaitCursor;
             try
             {
-                DataMaintenance.SaveDataList(dtlist, currenttabletype.ToString());
+                DataMaintenance.SaveDataList(dtlist,currenttabletype.ToString());
                 b = true;
             }
-
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Application.ProductName);
+                MessageBox.Show(ex.Message,Application.ProductName);
             }
             finally
             {

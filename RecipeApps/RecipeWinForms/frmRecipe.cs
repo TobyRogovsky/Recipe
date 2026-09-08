@@ -21,7 +21,12 @@ namespace RecipeWinForms
             btnSaveIngredient.Click += BtnSaveIngredient_Click;
             btnChangeStatus.Click += BtnChangeStatus_Click;
             gIngredients.CellClick += GIngredients_CellClick;
-            gSteps.CellClick += GSteps_CellClick;            
+            gSteps.CellClick += GSteps_CellClick;
+            gIngredients.CellValidating += Grid_CellValidating;
+            gSteps.CellValidating += Grid_CellValidating;
+            gIngredients.DataError += Grid_DataError;
+            gSteps.DataError += Grid_DataError;
+            txtCalories.Validating += TxtCalories_Validating;
         }
 
         public void ShowForm(int recipeID)
@@ -107,6 +112,41 @@ namespace RecipeWinForms
             DataTable dtUser = DataMaintenance.GetDataList("User");
             WinFormsUtility.SetListBinding(lstCuisineName, dtCuisine, dtrecipe, "Cuisine");
             WinFormsUtility.SetListBinding(lstUserName, dtUser, dtrecipe, "User");
+        }
+
+        private void TxtCalories_Validating(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!WinFormsUtility.IsInteger(txtCalories.Text, "Calories"))
+            {
+                e.Cancel = true;
+            }
+        }
+
+
+        private void Grid_CellValidating(object? sender,DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender!;
+            string columnname = grid.Columns[e.ColumnIndex].Name;
+            string value = e.FormattedValue?.ToString() ?? "";
+            if (columnname == "Sequence" || columnname == "InstructionSequence")
+            {
+                if (!WinFormsUtility.IsInteger(value, "Sequence"))
+                {
+                    e.Cancel = true;
+                }
+            }
+            if (columnname == "Amount")
+            {
+                if (!WinFormsUtility.IsDecimal(value, "Amount"))
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void Grid_DataError(object? sender,DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
         }
 
         private void LoadInstructions()
@@ -241,7 +281,7 @@ namespace RecipeWinForms
         private bool Save()
         {
             bool saved = false;            
-            if (!WinFormsUtility.IsInteger(txtCalories, "Calories"))
+            if (!WinFormsUtility.IsInteger(txtCalories.Text, "Calories"))
             {
                 return false;
             }
@@ -277,19 +317,16 @@ namespace RecipeWinForms
             {
                 return;
             }
-
             if (grid.Columns[e.ColumnIndex].Name != "Delete")
             {
                 return;
             }
-
             DataRowView? rowView = grid.Rows[e.RowIndex].DataBoundItem as DataRowView;
 
             if (rowView == null)
             {
                 return;
             }
-
             int id = rowView.Row[idColumn] == DBNull.Value ? 0 : Convert.ToInt32(rowView.Row[idColumn]);
 
             try
@@ -298,7 +335,6 @@ namespace RecipeWinForms
                 {
                     deleteMethod(id);
                 }
-
                 rowView.Row.Delete();
             }
             catch (Exception ex)

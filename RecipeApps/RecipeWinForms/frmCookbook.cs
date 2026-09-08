@@ -19,7 +19,9 @@ namespace RecipeWinForms
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
             btnSaveRecipes.Click += BtnSaveRecipes_Click;
-            gCookbookRecipe.CellClick += GCookbookRecipe_CellClick;            
+            gCookbookRecipe.CellClick += GCookbookRecipe_CellClick;
+            gCookbookRecipe.CellValidating += Grid_CellValidating;
+            gCookbookRecipe.DataError += Grid_DataError;
         }
 
         public void ShowForm(int cookbookID)
@@ -92,11 +94,30 @@ namespace RecipeWinForms
             }
         }
 
+        private void Grid_CellValidating(object? sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender!;
+            string columnname = grid.Columns[e.ColumnIndex].Name;
+            string value = e.FormattedValue?.ToString() ?? "";
+            if (columnname == "RecipeSequence")
+            {
+                if (!WinFormsUtility.IsInteger(value, "Sequence"))
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void Grid_DataError(object? sender,DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+        }
+
         private bool Save()
         {
             bool saved = false;
 
-            if (!WinFormsUtility.IsDecimal(txtPrice, "Price"))
+            if (!WinFormsUtility.IsDecimal(txtPrice.Text, "Price"))
             {
                 return false;
             }

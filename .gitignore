@@ -416,3 +416,10 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Recipe App login/security files
+RecipeApps/RecipeWinForms/LoginCredentials.cs
+RecipeApps/RecipeTest/TestCredentials.cs
+Database Files/3 Login and Password.sql
+# Recipe App secret configuration
+RecipeApps/RecipeWinForms/App.secret.config

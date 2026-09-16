@@ -9,18 +9,17 @@ namespace RecipeTest
     {
         [SetUp]
         public void Setup()
-        {
-            DBManager.SetConnectionString(
+        {           
+            string liveconnectionstring =
                 "Server=tcp:dev-tobycpu.database.windows.net,1433;" +
                 "Initial Catalog=RecipeDB;" +
                 "Persist Security Info=False;" +
-                "User ID=TobyR;" +
-                "Password=Liron@123;" +
                 "MultipleActiveResultSets=False;" +
                 "Encrypt=True;" +
                 "TrustServerCertificate=False;" +
-                "Connection Timeout=30;"
-            );
+                "Connection Timeout=30;";
+
+            DBManager.SetConnectionString(liveconnectionstring,TestCredentials.UserID, TestCredentials.Password);
         }
 
         [Test]

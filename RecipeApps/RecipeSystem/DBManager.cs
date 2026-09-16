@@ -8,6 +8,11 @@ namespace RecipeSystem
         {
             SQLUtility.SetConnString(connectionstring, true);
         }
+
+        public static void SetConnectionString(string connectionstring, string userid, string password)
+        {
+            SQLUtility.SetConnString(connectionstring, true, userid, password);
+        }
     }
 }
 

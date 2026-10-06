@@ -1,38 +1,42 @@
 ﻿using RecipeSystem;
 using System.Configuration;
-namespace RecipeWinForms
+namespace RecipeWinForms;
+using RecipeWinForms.Properties;
+
+public partial class frmLogin : Form
 {
-    public partial class frmLogin : Form
-    {        
-        
-        public frmLogin()
+
+    public frmLogin()
+    {
+        InitializeComponent();
+        btnLogin.Click += BtnLogin_Click;
+
+        txtUserID.Text = Settings.Default.userid;
+        txtPassword.Text = Settings.Default.password;
+    }
+
+    private void BtnLogin_Click(object? sender, EventArgs e)
+    {
+        // DEV
+        // string connectionstring = ConfigurationManager.ConnectionStrings["devconn"].ConnectionString;
+
+        // LIVE
+        string connectionstring = ConfigurationManager.ConnectionStrings["liveconn"].ConnectionString;
+        try
         {
-            InitializeComponent();
-            btnLogin.Click += BtnLogin_Click;
-            txtUserID.Text = LoginCredentials.UserID;
-            txtPassword.Text = LoginCredentials.Password;
+            DBManager.SetConnectionString(connectionstring, txtUserID.Text, txtPassword.Text);
+            Settings.Default.userid = txtUserID.Text;
+            Settings.Default.password = txtPassword.Text;
+            Settings.Default.Save();
+            Hide();            
+            frmMain frm = new frmMain();
+            frm.ShowDialog();
+
+            Close();
         }
-
-        private void BtnLogin_Click(object? sender, EventArgs e)
+        catch (Exception ex)
         {
-            // DEV
-            // string connectionstring = ConfigurationManager.ConnectionStrings["devconn"].ConnectionString;
-
-            // LIVE
-            string connectionstring = ConfigurationManager.ConnectionStrings["liveconn"].ConnectionString;
-            try
-            {
-                DBManager.SetConnectionString(connectionstring, txtUserID.Text, txtPassword.Text);                    
-                Hide();
-                frmMain frm = new frmMain();
-                frm.ShowDialog();
-
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Login Failed");
-            }
+            MessageBox.Show(ex.Message, "Login Failed");
         }
     }
 }

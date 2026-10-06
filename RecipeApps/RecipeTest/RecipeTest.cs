@@ -1,4 +1,6 @@
-﻿using NUnit.Framework.Legacy;
+﻿using Microsoft.IdentityModel.Protocols;
+using NUnit.Framework.Legacy;
+using System.Configuration;
 using System.Data;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
@@ -18,8 +20,7 @@ namespace RecipeTest
                 "Encrypt=True;" +
                 "TrustServerCertificate=False;" +
                 "Connection Timeout=30;";
-
-            DBManager.SetConnectionString(liveconnectionstring,TestCredentials.UserID, TestCredentials.Password);
+            DBManager.SetConnectionString(liveconnectionstring,TestCredentials.UserID,TestCredentials.Password );
         }
 
         [Test]

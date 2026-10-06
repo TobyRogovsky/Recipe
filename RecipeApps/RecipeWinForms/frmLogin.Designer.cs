@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             tblMain = new TableLayoutPanel();
-            lblUserID = new Label();
+            btnLogin = new Button();
+            txtUserID = new TextBox();
             lblPassword = new Label();
             txtPassword = new TextBox();
-            txtUserID = new TextBox();
-            btnLogin = new Button();
+            lblUserID = new Label();
             tblMain.SuspendLayout();
             SuspendLayout();
             // 
@@ -42,10 +42,10 @@
             tblMain.ColumnCount = 1;
             tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tblMain.Controls.Add(btnLogin, 0, 4);
-            tblMain.Controls.Add(txtUserID, 0, 3);
             tblMain.Controls.Add(lblPassword, 0, 2);
-            tblMain.Controls.Add(txtPassword, 0, 1);
+            tblMain.Controls.Add(txtPassword, 0, 3);
             tblMain.Controls.Add(lblUserID, 0, 0);
+            tblMain.Controls.Add(txtUserID, 0, 1);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
@@ -60,15 +60,25 @@
             tblMain.Size = new Size(800, 450);
             tblMain.TabIndex = 0;
             // 
-            // lblUserID
+            // btnLogin
             // 
-            lblUserID.AutoSize = true;
-            lblUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblUserID.Location = new Point(3, 0);
-            lblUserID.Name = "lblUserID";
-            lblUserID.Size = new Size(91, 32);
-            lblUserID.TabIndex = 0;
-            lblUserID.Text = "User ID";
+            btnLogin.AutoSize = true;
+            btnLogin.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLogin.Location = new Point(3, 362);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(100, 42);
+            btnLogin.TabIndex = 2;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = true;
+            // 
+            // txtUserID
+            // 
+            txtUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUserID.Location = new Point(3, 92);
+            txtUserID.Name = "txtUserID";
+            txtUserID.Size = new Size(200, 39);
+            txtUserID.TabIndex = 3;
+            txtUserID.UseSystemPasswordChar = true;
             // 
             // lblPassword
             // 
@@ -83,31 +93,21 @@
             // txtPassword
             // 
             txtPassword.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPassword.Location = new Point(3, 92);
+            txtPassword.Location = new Point(3, 272);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(200, 39);
             txtPassword.TabIndex = 4;
             txtPassword.UseSystemPasswordChar = true;
             // 
-            // txtUserID
+            // lblUserID
             // 
-            txtUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtUserID.Location = new Point(3, 272);
-            txtUserID.Name = "txtUserID";
-            txtUserID.Size = new Size(200, 39);
-            txtUserID.TabIndex = 3;
-            txtUserID.UseSystemPasswordChar = true;
-            // 
-            // btnLogin
-            // 
-            btnLogin.AutoSize = true;
-            btnLogin.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLogin.Location = new Point(3, 362);
-            btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(100, 42);
-            btnLogin.TabIndex = 2;
-            btnLogin.Text = "Login";
-            btnLogin.UseVisualStyleBackColor = true;
+            lblUserID.AutoSize = true;
+            lblUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUserID.Location = new Point(3, 0);
+            lblUserID.Name = "lblUserID";
+            lblUserID.Size = new Size(91, 32);
+            lblUserID.TabIndex = 0;
+            lblUserID.Text = "User ID";
             // 
             // frmLogin
             // 

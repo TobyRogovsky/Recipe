@@ -9,6 +9,12 @@ public partial class frmLogin : Form
     public frmLogin()
     {
         InitializeComponent();
+        StartPosition = FormStartPosition.CenterParent;
+        FormBorderStyle = FormBorderStyle.FixedDialog;
+        WindowState = FormWindowState.Normal;
+        MaximizeBox = false;
+        MinimizeBox = false;
+        ShowInTaskbar = false;
         btnLogin.Click += BtnLogin_Click;
 
         txtUserID.Text = Settings.Default.userid;
@@ -28,10 +34,7 @@ public partial class frmLogin : Form
             Settings.Default.userid = txtUserID.Text;
             Settings.Default.password = txtPassword.Text;
             Settings.Default.Save();
-            Hide();            
-            frmMain frm = new frmMain();
-            frm.ShowDialog();
-
+            DialogResult = DialogResult.OK;
             Close();
         }
         catch (Exception ex)

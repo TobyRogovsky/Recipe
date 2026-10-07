@@ -11,16 +11,30 @@ namespace RecipeTest
     {
         [SetUp]
         public void Setup()
-        {           
-            string liveconnectionstring =
-                "Server=tcp:dev-tobycpu.database.windows.net,1433;" +
-                "Initial Catalog=RecipeDB;" +
-                "Persist Security Info=False;" +
-                "MultipleActiveResultSets=False;" +
-                "Encrypt=True;" +
-                "TrustServerCertificate=False;" +
-                "Connection Timeout=30;";
-            DBManager.SetConnectionString(liveconnectionstring,TestCredentials.UserID,TestCredentials.Password );
+        {
+            string configpath = Path.Combine(
+                TestContext.CurrentContext.TestDirectory, "test.config");
+
+            if (!File.Exists(configpath))
+            {
+                throw new Exception("Missing config file: " + configpath);
+            }
+
+            var map = new ExeConfigurationFileMap
+            {
+                ExeConfigFilename = configpath
+            };
+
+            var config = ConfigurationManager.OpenMappedExeConfiguration(
+                map, ConfigurationUserLevel.None);
+
+            var connection = config.ConnectionStrings.ConnectionStrings["liveconn"]
+                ?? throw new Exception("liveconn is missing from: " + configpath);
+
+            DBManager.SetConnectionString(
+                connection.ConnectionString,
+                TestCredentials.UserID,
+                TestCredentials.Password);
         }
 
         [Test]

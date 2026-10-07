@@ -19,11 +19,19 @@ namespace RecipeWinForms
             mnuTile.Click += MnuTile_Click;            
             mnuEditData.Click += MnuEditData_Click;
             this.Shown += FrmMain_Shown;
-        }        
+        }
 
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
-            OpenForm(typeof(frmDashboard));
+            using frmLogin login = new frmLogin();
+            if (login.ShowDialog(this) == DialogResult.OK)
+            {
+                OpenForm(typeof(frmDashboard));
+            }
+            else
+            {
+                Close();
+            }
         }
 
         private Form? CreateForm(Type formType, int id)

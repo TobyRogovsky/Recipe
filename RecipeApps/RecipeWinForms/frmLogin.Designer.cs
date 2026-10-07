@@ -30,10 +30,10 @@
         {
             tblMain = new TableLayoutPanel();
             btnLogin = new Button();
-            txtUserID = new TextBox();
             lblPassword = new Label();
             txtPassword = new TextBox();
             lblUserID = new Label();
+            txtUserID = new TextBox();
             tblMain.SuspendLayout();
             SuspendLayout();
             // 
@@ -57,34 +57,25 @@
             tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 20.0000019F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tblMain.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tblMain.Size = new Size(800, 450);
+            tblMain.Size = new Size(384, 211);
             tblMain.TabIndex = 0;
             // 
             // btnLogin
             // 
             btnLogin.AutoSize = true;
             btnLogin.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLogin.Location = new Point(3, 362);
+            btnLogin.Location = new Point(3, 171);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(100, 42);
+            btnLogin.Size = new Size(100, 37);
             btnLogin.TabIndex = 2;
             btnLogin.Text = "Login";
             btnLogin.UseVisualStyleBackColor = true;
-            // 
-            // txtUserID
-            // 
-            txtUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtUserID.Location = new Point(3, 92);
-            txtUserID.Name = "txtUserID";
-            txtUserID.Size = new Size(200, 39);
-            txtUserID.TabIndex = 3;
-            txtUserID.UseSystemPasswordChar = true;
             // 
             // lblPassword
             // 
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPassword.Location = new Point(3, 179);
+            lblPassword.Location = new Point(3, 84);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(111, 32);
             lblPassword.TabIndex = 1;
@@ -93,7 +84,7 @@
             // txtPassword
             // 
             txtPassword.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPassword.Location = new Point(3, 272);
+            txtPassword.Location = new Point(3, 129);
             txtPassword.Name = "txtPassword";
             txtPassword.Size = new Size(200, 39);
             txtPassword.TabIndex = 4;
@@ -109,11 +100,20 @@
             lblUserID.TabIndex = 0;
             lblUserID.Text = "User ID";
             // 
+            // txtUserID
+            // 
+            txtUserID.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtUserID.Location = new Point(3, 45);
+            txtUserID.Name = "txtUserID";
+            txtUserID.Size = new Size(200, 39);
+            txtUserID.TabIndex = 3;
+            txtUserID.UseSystemPasswordChar = true;
+            // 
             // frmLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(384, 211);
             Controls.Add(tblMain);
             Name = "frmLogin";
             Text = "frmLogin";

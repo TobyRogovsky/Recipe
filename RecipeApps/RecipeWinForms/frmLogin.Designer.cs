@@ -107,7 +107,6 @@
             txtUserID.Name = "txtUserID";
             txtUserID.Size = new Size(200, 39);
             txtUserID.TabIndex = 3;
-            txtUserID.UseSystemPasswordChar = true;
             // 
             // frmLogin
             // 
